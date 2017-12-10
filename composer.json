@@ -1,0 +1,24 @@
+{
+    "name": "cinghie/yii2-media",
+    "description": "Yii2 Media to manage a files on Yii2 site.",
+    "keywords": ["yii2", "module", "media", "attachments","upload","wordpress"],
+    "homepage": "https://github.com/cinghie/yii2-articles",
+    "type": "yii2-extension",
+    "license": "BSD 3-Clause",
+    "authors": [
+        {
+            "name": "Gogodigital.it",
+            "email": "info@gogodigital.it",
+            "homepage": "http://www.gogodigital.it/"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.12",
+        "cinghie/yii2-traits": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "cinghie\\articles\\": ""
+        }
+    }
+}
