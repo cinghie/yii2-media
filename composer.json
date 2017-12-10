@@ -14,7 +14,8 @@
     ],
     "require": {
         "yiisoft/yii2": "~2.0.12",
-        "cinghie/yii2-traits": "*"
+        "cinghie/yii2-traits": "*",
+        "moxiecode/plupload": "*"
     },
     "autoload": {
         "psr-4": {
