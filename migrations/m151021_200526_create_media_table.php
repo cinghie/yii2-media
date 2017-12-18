@@ -22,12 +22,12 @@ class m151021_200526_create_media_table extends Migration
     {
         $this->createTable('{{%media}}', [
             'id' => $this->primaryKey(),
+            'reference' => $this->string(32)->notNull(),
             'title' => $this->string(255)->notNull(),
             'alias' => $this->string(255)->notNull(),
             'filename' => $this->string(255)->notNull(),
             'extension' => $this->string(12)->notNull(),
             'mimetype' => $this->string(255)->notNull(),
-            'reference' => $this->string(32)->notNull(),
             'size' => $this->integer(32)->notNull(),
             'hits' => $this->integer(11)->notNull()->defaultValue(0),
         ], $this->tableOptions);
