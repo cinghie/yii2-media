@@ -17,3 +17,15 @@ or add
 ```
 "cinghie/yii2-media": "*"
 ```
+
+Configuration
+-----------------
+
+### 1. Update yii2-media database schema
+
+Make sure that you have properly configured `db` application component
+and run the following command:
+```
+$ php yii migrate/up --migrationPath=@vendor/cinghie/yii2-media/migrations
+```
+
