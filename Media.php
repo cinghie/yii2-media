@@ -12,7 +12,6 @@
 
 namespace cinghie\media;
 
-use Yii;
 use yii\base\Module;
 
 class Media extends Module
@@ -24,13 +23,14 @@ class Media extends Module
 	// Select Attachment Types allowed
 	public $attachType = ['jpg','jpeg','gif','png','csv','pdf','txt','doc','docs'];
 
+	// Menu Rules
+	public $menuRoles = ['admin'];
+
 	// Show Titles in the views
 	public $showTitles = true;
 
 	/**
 	 * @inheritdoc
-	 *
-	 * @throws InvalidParamException
 	 */
 	public function init()
 	{
