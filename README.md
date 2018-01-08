@@ -29,3 +29,18 @@ and run the following command:
 $ php yii migrate/up --migrationPath=@vendor/cinghie/yii2-media/migrations
 ```
 
+### 2. Set configuration file
+
+Set on your configuration file
+
+```
+'modules' => [ 
+
+	// Yii2 Media
+	'media' => [
+		'class' => 'cinghie\media\Media',
+		'menuRoles' => ['admin'],
+	],
+	
+]	
+```
