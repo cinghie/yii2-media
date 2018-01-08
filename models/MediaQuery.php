@@ -10,7 +10,7 @@
  * @version 0.1.0
  */
 
-namespace vendor\cinghie\models;
+namespace cinghie\media\models;
 
 use yii\db\ActiveQuery;
 

@@ -12,7 +12,9 @@
 
 namespace cinghie\media;
 
+use Yii;
 use yii\base\Module;
+use yii\i18n\PhpMessageSource;
 
 class Media extends Module
 {
@@ -35,6 +37,21 @@ class Media extends Module
 	public function init()
 	{
 		parent::init();
+		$this->registerTranslations();
+	}
+
+	/**
+	 * Translating module message
+	 */
+	public function registerTranslations()
+	{
+		if (!isset(Yii::$app->i18n->translations['media*']))
+		{
+			Yii::$app->i18n->translations['media*'] = [
+				'class' => PhpMessageSource::class,
+				'basePath' => __DIR__ . '/messages',
+			];
+		}
 	}
 
 }
