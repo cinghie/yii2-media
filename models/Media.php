@@ -26,9 +26,13 @@ use Yii;
  * @property string $mimetype
  * @property int $size
  * @property int $hits
+ *
+ * @property Media $items
  */
 class Media extends \yii\db\ActiveRecord
 {
+
+	public $items;
 
     /**
      * @inheritdoc
@@ -68,6 +72,16 @@ class Media extends \yii\db\ActiveRecord
             'size' => Yii::t('app', 'Size'),
             'hits' => Yii::t('app', 'Hits'),
         ];
+    }
+
+	/**
+	 * Get Upload Widget
+	 *
+	 *
+	 */
+    public function getUploadsWidget()
+    {
+		return ;
     }
 
     /**
