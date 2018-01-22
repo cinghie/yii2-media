@@ -21,6 +21,9 @@ class Media extends Module
 
 	// Controller Namespace
 	public $controllerNamespace = 'cinghie\media\controllers';
+	
+	// Select Path To Upload Media
+	public $mediaPath = '@webroot/img/media/';
 
 	// Select Attachment Types allowed
 	public $attachType = ['jpg','jpeg','gif','png','csv','pdf','txt','doc','docs'];
