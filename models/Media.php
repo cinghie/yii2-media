@@ -13,6 +13,9 @@
 namespace cinghie\media\models;
 
 use Yii;
+use cinghie\traits\AttachmentTrait;
+use cinghie\traits\TitleAliasTrait;
+use cinghie\traits\ViewsHelpersTrait;
 
 /**
  * This is the model class for table "{{%media}}".
@@ -31,6 +34,7 @@ use Yii;
  */
 class Media extends \yii\db\ActiveRecord
 {
+	use AttachmentTrait, TitleAliasTrait, ViewsHelpersTrait;
 
 	public $items;
 
@@ -62,15 +66,15 @@ class Media extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'reference' => Yii::t('app', 'Reference'),
-            'title' => Yii::t('app', 'Title'),
-            'alias' => Yii::t('app', 'Alias'),
-            'filename' => Yii::t('app', 'Filename'),
-            'extension' => Yii::t('app', 'Extension'),
-            'mimetype' => Yii::t('app', 'Mimetype'),
-            'size' => Yii::t('app', 'Size'),
-            'hits' => Yii::t('app', 'Hits'),
+            'id' => Yii::t('media', 'ID'),
+            'reference' => Yii::t('media', 'Reference'),
+            'title' => Yii::t('media', 'Title'),
+            'alias' => Yii::t('media', 'Alias'),
+            'filename' => Yii::t('media', 'Filename'),
+            'extension' => Yii::t('media', 'Extension'),
+            'mimetype' => Yii::t('media', 'Mimetype'),
+            'size' => Yii::t('media', 'Size'),
+            'hits' => Yii::t('media', 'Hits'),
         ];
     }
 
@@ -81,7 +85,7 @@ class Media extends \yii\db\ActiveRecord
 	 */
     public function getUploadsWidget()
     {
-		return ;
+		return;
     }
 
     /**
