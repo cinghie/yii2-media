@@ -80,8 +80,6 @@ class Media extends \yii\db\ActiveRecord
 
 	/**
 	 * Get Upload Widget
-	 *
-	 *
 	 */
     public function getUploadsWidget()
     {
