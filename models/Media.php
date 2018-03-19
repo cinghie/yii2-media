@@ -14,27 +14,22 @@ namespace cinghie\media\models;
 
 use Yii;
 use cinghie\traits\AttachmentTrait;
-use cinghie\traits\TitleAliasTrait;
 use cinghie\traits\ViewsHelpersTrait;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%media}}".
  *
  * @property int $id
  * @property string $reference
- * @property string $title
- * @property string $alias
- * @property string $filename
- * @property string $extension
- * @property string $mimetype
  * @property int $size
  * @property int $hits
  *
  * @property Media $items
  */
-class Media extends \yii\db\ActiveRecord
+class Media extends ActiveRecord
 {
-	use AttachmentTrait, TitleAliasTrait, ViewsHelpersTrait;
+	use AttachmentTrait, ViewsHelpersTrait;
 
 	public $items;
 
@@ -51,13 +46,11 @@ class Media extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
-            [['title', 'filename', 'extension', 'mimetype', 'size'], 'required'],
-            [['size', 'hits'], 'integer'],
+        return array_merge(AttachmentTrait::rules(), [
+            [['title', 'filename'], 'required'],
+            [['hits'], 'integer'],
             [['reference'], 'string', 'max' => 32],
-            [['title', 'alias', 'filename', 'mimetype'], 'string', 'max' => 255],
-            [['extension'], 'string', 'max' => 12],
-        ];
+        ]);
     }
 
     /**
@@ -65,17 +58,11 @@ class Media extends \yii\db\ActiveRecord
      */
     public function attributeLabels()
     {
-        return [
+        return array_merge(AttachmentTrait::attributeLabels(),[
             'id' => Yii::t('media', 'ID'),
-            'reference' => Yii::t('media', 'Reference'),
-            'title' => Yii::t('media', 'Title'),
-            'alias' => Yii::t('media', 'Alias'),
-            'filename' => Yii::t('media', 'Filename'),
-            'extension' => Yii::t('media', 'Extension'),
-            'mimetype' => Yii::t('media', 'Mimetype'),
-            'size' => Yii::t('media', 'Size'),
             'hits' => Yii::t('media', 'Hits'),
-        ];
+            'reference' => Yii::t('media', 'Reference'),
+        ]);
     }
 
 	/**
