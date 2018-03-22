@@ -25,8 +25,11 @@ class Media extends Module
 	// Select Path To Upload Media
 	public $mediaPath = '@webroot/img/media/';
 
+	// Select URL To Upload Item Image
+	public $mediaURL  = '@web/img/articles/items/';
+
 	// Select Attachment Types allowed
-	public $attachType = ['jpg','jpeg','gif','png','csv','pdf','txt','doc','docs'];
+	public $mediaType = ['jpg','jpeg','gif','png','csv','pdf','txt','doc','docs'];
 
 	// Menu Rules
 	public $menuRoles = ['admin'];
