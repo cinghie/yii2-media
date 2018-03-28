@@ -80,8 +80,8 @@ class Media extends ActiveRecord
 		$media = '<label class="control-label" for="items-photo_name">' .Yii::t('traits','Media'). '</label>';
 		$media .= FileInput::widget([
 			'model' => $this,
-			'attribute' => 'image',
-			'name' => 'image',
+			'attribute' => 'items',
+			'name' => 'items',
 			'options'=>[
 				'accept' => $this->getMediaAccepted()
 			],
@@ -92,10 +92,10 @@ class Media extends ActiveRecord
 				'showCaption' => true,
 				'showRemove' => true,
 				'showUpload' => false,
-				'initialPreview' => $this->image ? $this->getMediaUrl() : false,
-				'initialPreviewAsData' => $this->image ? true : false,
-				'initialPreviewConfig' => $this->isNewRecord ? [] : [ ['url' => Url::to(['deleteimage', 'id' => $this->id])] ],
-				'overwriteInitial' => $this->image ? true : false
+				'initialPreview' => $this->items ? $this->getMediaUrl() : false,
+				'initialPreviewAsData' => $this->items ? true : false,
+				'initialPreviewConfig' => $this->isNewRecord ? [] : [ ['url' => Url::to(['deletemedia', 'id' => $this->id])] ],
+				'overwriteInitial' => $this->items ? true : false
 			]
 		]);
 
