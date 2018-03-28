@@ -23,10 +23,10 @@ class Media extends Module
 	public $controllerNamespace = 'cinghie\media\controllers';
 	
 	// Select Path To Upload Media
-	public $mediaPath = '@webroot/img/media/';
+	public $mediaPath = '@webroot/media/';
 
 	// Select URL To Upload Item Image
-	public $mediaURL  = '@web/img/articles/items/';
+	public $mediaURL  = '@web/media/';
 
 	// Select Attachment Types allowed
 	public $mediaType = ['jpg','jpeg','gif','png','csv','pdf','txt','doc','docs'];
