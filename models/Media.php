@@ -150,7 +150,7 @@ class Media extends ActiveRecord
 	 * @return UploadedFile|bool
 	 * @throws \yii\base\Exception
 	 */
-	public function uploadFile($fileName,$fileNameType,$filePath,$fileField)
+	public function uploadFile($fileName = "",$fileNameType = "",$filePath,$fileField)
 	{
 		// get the uploaded file instance. for multiple file uploads
 		// the following data will return an array (you may need to use
