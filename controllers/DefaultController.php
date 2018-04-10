@@ -17,9 +17,17 @@ use cinghie\media\models\Media;
 class DefaultController extends \yii\web\Controller
 {
 
-    public function actionIndex()
+	/**
+	 * @return string
+	 * @throws \yii\base\InvalidArgumentException
+	 */
+	public function actionIndex()
     {
-        return $this->render('index');
+    	$model = new Media();
+
+        return $this->render('index', [
+	        'model' => $model
+        ]);
     }
 
 }
