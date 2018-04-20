@@ -150,7 +150,7 @@ class Media extends ActiveRecord
 	 * @return UploadedFile|bool
 	 * @throws \yii\base\Exception
 	 */
-	public function uploadFile($fileName = "",$fileNameType = "",$filePath,$fileField)
+	public function uploadFile($fileName,$fileNameType,$filePath,$fileField)
 	{
 		// get the uploaded file instance. for multiple file uploads
 		// the following data will return an array (you may need to use
@@ -169,7 +169,7 @@ class Media extends ActiveRecord
 				$name = $file->baseName; // get original file name
 				break;
 			case 'casual':
-				$name = Yii::$app->security->generateRandomString(); // generate a unique file name
+				$name = Yii::$app->security->generateRandomString(32); // generate a unique file name
 				break;
 			default:
 				$name = $fileName; // get item title like filename
