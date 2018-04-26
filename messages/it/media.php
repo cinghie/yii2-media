@@ -1,5 +1,6 @@
 <?php
 
 return [
-	'Media' => 'Media'
+	'Add Media' => 'Aggiungi Media',
+	'Media' => 'Media',
 ];

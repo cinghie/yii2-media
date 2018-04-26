@@ -78,8 +78,7 @@ class Media extends ActiveRecord
 	public function getMediasWidget()
 	{
 		/** @var $this \yii\base\Model */
-		$medias = '<label class="control-label" for="items-photo_name">' .Yii::t('traits','Media'). '</label>';
-		$medias .= FileInput::widget([
+		return FileInput::widget([
 			'model' => $this,
 			'attribute' => 'items[]',
 			'name' => 'items[]',
@@ -99,8 +98,6 @@ class Media extends ActiveRecord
 				'overwriteInitial' => $this->items ? true : false
 			]
 		]);
-
-		return $medias;
 	}
 
 	/**
