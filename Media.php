@@ -32,7 +32,7 @@ class Media extends Module
 	public $mediaType = ['jpg','jpeg','gif','png','csv','pdf','txt','doc','docs'];
 
 	// Menu Rules
-	public $menuRoles = ['admin'];
+	public $mediaRoles = ['admin'];
 
 	// Show Titles in the views
 	public $showTitles = true;

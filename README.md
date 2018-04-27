@@ -31,7 +31,7 @@ $ php yii migrate/up --migrationPath=@vendor/cinghie/yii2-media/migrations
 
 ### 2. Set configuration file
 
-Set on your configuration file
+Set on your configuration file:
 
 ```
 'modules' => [ 
@@ -39,7 +39,23 @@ Set on your configuration file
 	// Yii2 Media
 	'media' => [
 		'class' => 'cinghie\media\Media',
-		'menuRoles' => ['admin'],
+		'mediaRoles' => ['admin'],
+	],
+	
+]	
+```
+
+### 2. Set frontend filter
+
+To disable media management on frontend, set on config: 
+
+```
+'modules' => [ 
+
+	// Yii2 Media
+	'media' => [
+		'class' => 'cinghie\media\Media',
+		'as frontend' => 'cinghie\media\filters\FrontendFilter',
 	],
 	
 ]	
