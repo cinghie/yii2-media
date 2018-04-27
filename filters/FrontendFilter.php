@@ -25,7 +25,7 @@ class FrontendFilter extends ActionFilter
     /**
      * @var array
      */
-    public $controllers = ['default', 'index', 'list','delete'];
+    public $controllers = ['default'];
 
     /**
      * @param \yii\base\Action $action
