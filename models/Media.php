@@ -195,7 +195,7 @@ class Media extends ActiveRecord
 	 * @throws InvalidParamException
 	 */
 	public function getMediaPath() {
-		return isset($this->media) ? Yii::getAlias(Yii::$app->controller->module->mediaPath).$this->media : null;
+		return Yii::$app->controller->module->mediaPath.$this->filename;
 	}
 
 	/**
@@ -206,9 +206,7 @@ class Media extends ActiveRecord
 	 */
 	public function getMediaUrl()
 	{
-		// return a default media placeholder if your source avatar is not found
-		$file = isset($this->media) ? $this->media : 'default.jpg';
-		return Yii::getAlias(Yii::$app->controller->module->mediaURL).$file;
+		return Yii::getAlias(Yii::$app->controller->module->mediaURL).$this->filename;
 	}
 
 	/**
@@ -246,6 +244,94 @@ class Media extends ActiveRecord
 	public function getMediaAllowed()
 	{
 		return Yii::$app->controller->module->mediaType;
+	}
+
+	/**
+	 * Format size in readable size
+	 *
+	 * @return string
+	 */
+	public function getFormattedSize()
+	{
+		$bytes = sprintf('%u', $this->size);
+
+		if ($bytes > 0)
+		{
+			$unit = (int)log($bytes, 1024);
+			$units = array('B', 'KB', 'MB', 'GB');
+
+			if (array_key_exists($unit, $units) === true)
+			{
+				return sprintf('%d %s', $bytes / (1024 * $unit), $units[$unit]);
+			}
+		}
+
+		return $bytes;
+	}
+
+	/**
+	 * Get Attachmente Type Image by Type
+	 *
+	 * @return string
+	 */
+	public function getMimeTypeIcon()
+	{
+		$applications = [
+			'csv' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
+			'pdf' => '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
+			'plain' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
+			'text' => '<i class="fa fa-file-text-o" aria-hidden="true"></i>',
+			'vnd.ms-excel' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
+		];
+
+		$texts = [
+			'csv' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
+			'pdf' => '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
+			'plain' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
+			'text' => '<i class="fa fa-file-text-o" aria-hidden="true"></i>',
+		];
+
+		$types = [
+			'audio' => '<i class="fa fa-file-audio-o" aria-hidden="true"></i>',
+			'archive' => '<i class="fa fa-file-archive-o" aria-hidden="true"></i>',
+			'image' => '<i class="fa fa-file-image-o" aria-hidden="true"></i>',
+			'video' => '<i class="fa fa-file-video-o" aria-hidden="true"></i>',
+		];
+
+		$mimetype = $this->getMediaType();
+
+		foreach($types as $type => $icon)
+		{
+			if (isset($mimetype[0]) && $mimetype[0] === $type) {
+				return $icon.'<br>'.$this->mimetype;
+			}
+		}
+
+		foreach($applications as $application => $icon)
+		{
+			if (isset($mimetype[1]) && $mimetype[1] === $application) {
+				return $icon.'<br>'.$this->mimetype;
+			}
+		}
+
+		foreach($texts as $text => $icon)
+		{
+			if (isset($mimetype[1]) && $mimetype[1] === $text) {
+				return $icon.'<br>'.$this->mimetype;
+			}
+		}
+
+		return '<i class="fa fa-file-o" aria-hidden="true"></i>'.'<br>'.$this->mimetype;
+	}
+
+	/**
+	 * Generate Attachment type from mimetype
+	 *
+	 * @return string[]
+	 */
+	public function getMediaType()
+	{
+		return explode('/',$this->mimetype);
 	}
 
     /**

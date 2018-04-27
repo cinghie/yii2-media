@@ -14,6 +14,7 @@ namespace cinghie\media\controllers;
 
 use Yii;
 use cinghie\media\models\Media;
+use cinghie\media\models\MediaSearch;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
@@ -71,10 +72,12 @@ class DefaultController extends \yii\web\Controller
 	 */
 	public function actionList()
 	{
-		$model = new Media();
+		$searchModel  = new MediaSearch();
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 		return $this->render('list', [
-			'model' => $model
+			'searchModel'  => $searchModel,
+			'dataProvider' => $dataProvider
 		]);
 	}
 
