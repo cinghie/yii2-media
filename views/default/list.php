@@ -63,12 +63,12 @@ $this->params['breadcrumbs'][] = Yii::t('media', 'List');
                     ],
                     [
                         'attribute' => 'reference',
-                        'width' => '10%',
+                        'width' => '7%',
                         'hAlign' => 'center',
                     ],
                     [
                         'attribute' => 'size',
-                        'width' => '8%',
+                        'width' => '7%',
                         'hAlign' => 'center',
                         'value' => function ($model) {
                             return $model->getFormattedSize();
@@ -76,13 +76,13 @@ $this->params['breadcrumbs'][] = Yii::t('media', 'List');
                     ],
                     [
                         'attribute' => 'extension',
-                        'width' => '6%',
+                        'width' => '7%',
                         'hAlign' => 'center',
                     ],[
                         'attribute' => 'mimetype',
                         'format' => 'html',
                         'hAlign' => 'center',
-                        'width' => '8%',
+                        'width' => '7%',
                         'value' => function ($model) {
                             return $model->getMimeTypeIcon();
                         }
