@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = Yii::t('media', 'List');
                         'hAlign' => 'center',
                         'width' => '8%',
                         'value' => function ($model) {
-                            return Html::img($model->getMediaUrl(),[ 'width' => '64px']);
+                            return Html::img($model->getMediaUrl(),[ 'width' => '78px']);
                         },
                     ],
                     [

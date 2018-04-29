@@ -2,9 +2,9 @@
 
 	<div class="col-md-6 pull-left text-left">
 
-		<?= $searchModel->getStandardButton('fa fa-list-ul', Yii::t('media','List'), ['list']) ?>
+		<?= $searchModel->getStandardButton('fa fa-list-ul', Yii::t('traits','List'), ['list']) ?>
 
-        <?= $searchModel->getStandardButton('fa fa-th', Yii::t('media','Grid'), ['index']) ?>
+        <?= $searchModel->getStandardButton('fa fa-th', Yii::t('traits','Grid'), ['index']) ?>
 
 	</div>
 
