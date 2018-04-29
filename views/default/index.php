@@ -20,3 +20,5 @@ $this->params['breadcrumbs'][] = $this->title;
 		</div>
 	</div>
 </div>
+
+<?= $model->getMediasGrid($dataProvider); ?>
