@@ -195,7 +195,7 @@ class Media extends ActiveRecord
 	 * @throws InvalidParamException
 	 */
 	public function getMediaPath() {
-		return Yii::$app->controller->module->mediaPath.$this->filename;
+		return Yii::getAlias(Yii::$app->controller->module->mediaPath).$this->filename;
 	}
 
 	/**

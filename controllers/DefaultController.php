@@ -58,9 +58,13 @@ class DefaultController extends \yii\web\Controller
 	public function actionIndex()
     {
     	$model = new Media();
+	    $searchModel  = new MediaSearch();
+	    $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-	        'model' => $model
+	        'model' => $model,
+	        'searchModel'  => $searchModel,
+	        'dataProvider' => $dataProvider
         ]);
     }
 

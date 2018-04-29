@@ -9,7 +9,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
-<?= Yii::$app->view->renderFile('@vendor/cinghie/yii2-media/views/default/_navbar.php'); ?>
+<?= Yii::$app->view->renderFile('@vendor/cinghie/yii2-media/views/default/_navbar.php', [
+	'searchModel' => $searchModel
+]) ?>
 
 <div class="row">
 	<div class="col-md-12">

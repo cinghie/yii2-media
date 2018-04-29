@@ -12,7 +12,9 @@ $this->params['breadcrumbs'][] = Yii::t('media', 'List');
 
 ?>
 
-<?= Yii::$app->view->renderFile('@vendor/cinghie/yii2-media/views/default/_navbar.php'); ?>
+<?= Yii::$app->view->renderFile('@vendor/cinghie/yii2-media/views/default/_navbar.php', [
+	'searchModel' => $searchModel
+]) ?>
 
 <div class="clearfix"></div>
 
@@ -45,6 +47,7 @@ $this->params['breadcrumbs'][] = Yii::t('media', 'List');
                         'attribute' => Yii::t('media', 'Media'),
                         'format' => 'raw',
                         'hAlign' => 'center',
+                        'width' => '8%',
                         'value' => function ($model) {
                             return Html::img($model->getMediaUrl(),[ 'width' => '64px']);
                         },
