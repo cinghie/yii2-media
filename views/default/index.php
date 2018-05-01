@@ -21,4 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
 	</div>
 </div>
 
+<div class="clearfix"></div>
+
 <?= $model->getMediasGrid($dataProvider); ?>

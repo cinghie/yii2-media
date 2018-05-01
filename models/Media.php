@@ -70,21 +70,43 @@ class Media extends ActiveRecord
     }
 
 	/**
-	 * Generate Media Grid View
+	 * Generate Mediaw Grid View
+	 *
+	 * @return string
 	 */
 	public function getMediasGrid($dataProvider)
 	{
 		$medias = $dataProvider->getModels();
-		echo '<div class="row">';
+
+		$html = '';
+		$html .= '<div class="row">';
 
 		foreach ($medias as $media) {
-			$attributes = $media->attributes;
-			echo '<div class="col-md-2">';
-			echo $attributes['title'];
-			echo '</div>';
+			$html .= $this->getMediaGrid($media);
 		}
 
-		echo '</div>';
+		$html .= '</div>';
+		$html .= '<div class="clearfix"></div>';
+
+		echo $html;
+	}
+
+	/**
+	 * Generate Media Grid View
+	 *
+	 * @return string
+	 */
+	public function getMediaGrid($media)
+	{
+		$attributes = $media->attributes;
+
+		$html = '<div class="col-md-2 col-sm-3 col-xs-6">';
+		$html .= '<div class="media-item">';
+		$html .= '<a href="#" class="thumbnail">';
+		$html .= '<img src="'.$media->getMediaUrl().'" alt="'.$attributes['title'].'" title="'.$attributes['title'].'">';
+		$html .= '</a></div></div>';
+
+		return $html;
 	}
 
 	/**
