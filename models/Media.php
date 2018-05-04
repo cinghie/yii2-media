@@ -177,6 +177,48 @@ class Media extends ActiveRecord
 	}
 
 	/**
+	 * Fetch stored file name with complete path
+	 *
+	 * @return string
+	 * @throws InvalidParamException
+	 */
+	public function getMediaPath() {
+		return Yii::getAlias(Yii::$app->controller->module->mediaPath).$this->filename;
+	}
+
+	/**
+	 * Fetch stored thumbs filename with complete path
+	 *
+	 * @return string
+	 * @throws InvalidParamException
+	 */
+	public function getMediaThumbsPath() {
+		return Yii::getAlias(Yii::$app->controller->module->mediaThumbsPath).$this->filename;
+	}
+
+	/**
+	 * Fetch stored file url
+	 *
+	 * @return string
+	 * @throws InvalidParamException
+	 */
+	public function getMediaUrl()
+	{
+		return Yii::getAlias(Yii::$app->controller->module->mediaURL).$this->filename;
+	}
+
+	/**
+	 * Fetch stored file thumbs url
+	 *
+	 * @return string
+	 * @throws InvalidParamException
+	 */
+	public function getMediaThumbsUrl()
+	{
+		return Yii::getAlias(Yii::$app->controller->module->mediaThumbsURL).$this->filename;
+	}
+
+	/**
 	 * Upload file to folder
 	 *
 	 * @param $fileName
@@ -229,45 +271,35 @@ class Media extends ActiveRecord
 	}
 
 	/**
-	 * Fetch stored file name with complete path
+	 * Create Thumb Images files
 	 *
-	 * @return string
-	 * @throws InvalidParamException
-	 */
-	public function getMediaPath() {
-		return Yii::getAlias(Yii::$app->controller->module->mediaPath).$this->filename;
-	}
-
-	/**
-	 * Fetch stored thumbs filename with complete path
+	 * @param $image
+	 * @param $imagePath
+	 * @param $imgOptions
+	 * @param $thumbPath
 	 *
-	 * @return string
-	 * @throws InvalidParamException
+	 * @return mixed the uploaded image instance
+	 * @throws \Imagine\Exception\RuntimeException
 	 */
-	public function getMediaThumbsPath() {
-		return Yii::getAlias(Yii::$app->controller->module->mediaThumbsPath).$this->filename;
-	}
-
-	/**
-	 * Fetch stored file url
-	 *
-	 * @return string
-	 * @throws InvalidParamException
-	 */
-	public function getMediaUrl()
+	public function createThumbImages($image,$imagePath,$imgOptions,$thumbPath)
 	{
-		return Yii::getAlias(Yii::$app->controller->module->mediaURL).$this->filename;
-	}
+		$imageName = $image->name;
+		$imageLink = $imagePath.$image->name;
 
-	/**
-	 * Fetch stored file thumbs url
-	 *
-	 * @return string
-	 * @throws InvalidParamException
-	 */
-	public function getMediaThumbsUrl()
-	{
-		return Yii::getAlias(Yii::$app->controller->module->mediaThumbsURL).$this->filename;
+		// Check thumbPath exist, else create
+		$this->createDirectory($thumbPath);
+
+		// Save Image Thumbs
+		Image::thumbnail($imageLink, $imgOptions['small']['width'], $imgOptions['small']['height'])
+		     ->save( $thumbPath . 'small/' . $imageName, [ 'quality' => $imgOptions['small']['quality']]);
+		Image::thumbnail($imageLink, $imgOptions['medium']['width'], $imgOptions['medium']['height'])
+		     ->save( $thumbPath . 'medium/' . $imageName, [ 'quality' => $imgOptions['medium']['quality']]);
+		Image::thumbnail($imageLink, $imgOptions['large']['width'], $imgOptions['large']['height'])
+		     ->save( $thumbPath . 'large/' . $imageName, [ 'quality' => $imgOptions['large']['quality']]);
+		Image::thumbnail($imageLink, $imgOptions['extra']['width'], $imgOptions['extra']['height'])
+		     ->save( $thumbPath . 'extra/' . $imageName, [ 'quality' => $imgOptions['extra']['quality']]);
+
+		return true;
 	}
 
 	/**
