@@ -19,6 +19,7 @@ use kartik\widgets\FileInput;
 use yii\base\InvalidParamException;
 use yii\db\ActiveRecord;
 use yii\helpers\Url;
+use yii\imagine\Image;
 use yii\web\UploadedFile;
 
 /**
@@ -274,30 +275,28 @@ class Media extends ActiveRecord
 	 * Create Thumb Images files
 	 *
 	 * @param $image
-	 * @param $imagePath
-	 * @param $imgOptions
-	 * @param $thumbPath
 	 *
 	 * @return mixed the uploaded image instance
 	 * @throws \Imagine\Exception\RuntimeException
 	 */
-	public function createThumbImages($image,$imagePath,$imgOptions,$thumbPath)
+	public function createThumbImages($media)
 	{
-		$imageName = $image->name;
-		$imageLink = $imagePath.$image->name;
+		$imagePath  = Yii::$app->controller->module->mediaPath;
+		$imgOptions = Yii::$app->controller->module->mediaThumbsOptions;
+		$thumbsPath = Yii::$app->controller->module->mediaThumbsPath;
 
-		// Check thumbPath exist, else create
-		$this->createDirectory($thumbPath);
+		$imageName = $media->filename;
+		$imageLink = $imagePath.$media->filename;
 
 		// Save Image Thumbs
 		Image::thumbnail($imageLink, $imgOptions['small']['width'], $imgOptions['small']['height'])
-		     ->save( $thumbPath . 'small/' . $imageName, [ 'quality' => $imgOptions['small']['quality']]);
+		     ->save( $thumbsPath . 'small/' . $imageName, [ 'quality' => $imgOptions['small']['quality']]);
 		Image::thumbnail($imageLink, $imgOptions['medium']['width'], $imgOptions['medium']['height'])
-		     ->save( $thumbPath . 'medium/' . $imageName, [ 'quality' => $imgOptions['medium']['quality']]);
+		     ->save( $thumbsPath . 'medium/' . $imageName, [ 'quality' => $imgOptions['medium']['quality']]);
 		Image::thumbnail($imageLink, $imgOptions['large']['width'], $imgOptions['large']['height'])
-		     ->save( $thumbPath . 'large/' . $imageName, [ 'quality' => $imgOptions['large']['quality']]);
+		     ->save( $thumbsPath . 'large/' . $imageName, [ 'quality' => $imgOptions['large']['quality']]);
 		Image::thumbnail($imageLink, $imgOptions['extra']['width'], $imgOptions['extra']['height'])
-		     ->save( $thumbPath . 'extra/' . $imageName, [ 'quality' => $imgOptions['extra']['quality']]);
+		     ->save( $thumbsPath . 'extra/' . $imageName, [ 'quality' => $imgOptions['extra']['quality']]);
 
 		return true;
 	}
