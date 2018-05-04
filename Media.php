@@ -25,13 +25,27 @@ class Media extends Module
 	// Select Path To Upload Media
 	public $mediaPath = '@webroot/media/';
 
-	// Select URL To Upload Item Image
+	// Select Path To Upload Media Thumbs
+	public $mediaThumbsPath = '@webroot/media/thumbs/';
+
+	// Select URL To Media Files
 	public $mediaURL  = '@web/media/';
 
-	// Select Attachment Types allowed
+	// Select URL To Media Thumbs Files
+	public $mediaThumbsURL  = '@web/media/thumbs/';
+
+	// Select Media Thumbs Options
+	public $mediaThumbsOptions =	[
+		'small'  => ['quality' => 80, 'width' => 150, 'height' => 150],
+		'medium' => ['quality' => 80, 'width' => 250, 'height' => 250],
+		'large'  => ['quality' => 80, 'width' => 400, 'height' => 400],
+		'extra'  => ['quality' => 80, 'width' => 800, 'height' => 800],
+	];
+
+	// Select Media Types allowed
 	public $mediaType = ['jpg','jpeg','gif','png','csv','pdf','txt','doc','docs'];
 
-	// Menu Rules
+	// Media Rules
 	public $mediaRoles = ['admin'];
 
 	// Show Titles in the views
@@ -42,8 +56,10 @@ class Media extends Module
 	 */
 	public function init()
 	{
-		parent::init();
+		$this->createMediaDirectory();
+		$this->createMediaThumbsDirectory();
 		$this->registerTranslations();
+		parent::init();
 	}
 
 	/**
@@ -57,6 +73,41 @@ class Media extends Module
 				'class' => PhpMessageSource::class,
 				'basePath' => __DIR__ . '/messages',
 			];
+		}
+	}
+
+	/**
+	 * Creating directory to save Media if not exist
+	 *
+	 * @param string $path file to create
+	 */
+	protected function createMediaDirectory()
+	{
+		if(!file_exists(Yii::getAlias($this->mediaPath))) {
+			mkdir($this->mediaPath, 0755, true);
+		}
+	}
+
+	/**
+	 * Creating directory to save Media Thumbs if not exist
+	 *
+	 * @param string $path file to create
+	 */
+	protected function createMediaThumbsDirectory()
+	{
+		$thumbsPath = Yii::getAlias($this->mediaThumbsPath);
+
+		$sizes = array(
+			'small',
+			'medium',
+			'large',
+			'extra',
+		);
+
+		foreach($sizes as $size) {
+			if(!file_exists($thumbsPath.$size)) {
+				mkdir($thumbsPath.$size, 0755, true);
+			}
 		}
 	}
 

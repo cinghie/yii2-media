@@ -239,6 +239,16 @@ class Media extends ActiveRecord
 	}
 
 	/**
+	 * Fetch stored thumbs filename with complete path
+	 *
+	 * @return string
+	 * @throws InvalidParamException
+	 */
+	public function getMediaThumbsPath() {
+		return Yii::getAlias(Yii::$app->controller->module->mediaThumbsPath).$this->filename;
+	}
+
+	/**
 	 * Fetch stored file url
 	 *
 	 * @return string
@@ -247,6 +257,17 @@ class Media extends ActiveRecord
 	public function getMediaUrl()
 	{
 		return Yii::getAlias(Yii::$app->controller->module->mediaURL).$this->filename;
+	}
+
+	/**
+	 * Fetch stored file thumbs url
+	 *
+	 * @return string
+	 * @throws InvalidParamException
+	 */
+	public function getMediaThumbsUrl()
+	{
+		return Yii::getAlias(Yii::$app->controller->module->mediaThumbsURL).$this->filename;
 	}
 
 	/**
