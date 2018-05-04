@@ -214,9 +214,9 @@ class Media extends ActiveRecord
 	 * @return string
 	 * @throws InvalidParamException
 	 */
-	public function getMediaThumbsUrl()
+	public function getMediaThumbsUrl($size = 'small')
 	{
-		return Yii::getAlias(Yii::$app->controller->module->mediaThumbsURL).$this->filename;
+		return Yii::getAlias(Yii::$app->controller->module->mediaThumbsURL).'/'.$size.'/'.$this->filename;
 	}
 
 	/**
@@ -281,9 +281,9 @@ class Media extends ActiveRecord
 	 */
 	public function createThumbImages($media)
 	{
-		$imagePath  = Yii::$app->controller->module->mediaPath;
+		$imagePath  = Yii::getAlias(Yii::$app->controller->module->mediaPath);
 		$imgOptions = Yii::$app->controller->module->mediaThumbsOptions;
-		$thumbsPath = Yii::$app->controller->module->mediaThumbsPath;
+		$thumbsPath = Yii::getAlias(Yii::$app->controller->module->mediaThumbsPath);
 
 		$imageName = $media->filename;
 		$imageLink = $imagePath.$media->filename;
