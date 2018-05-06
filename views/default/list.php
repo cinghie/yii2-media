@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @var $dataProvider yii\data\ActiveDataProvider
+ * @var $model cinghie\media\models\Media
+ * @var $searchModel cinghie\media\models\MediaSearch
+ * @var $this yii\web\View
+ */
+
 use kartik\grid\GridView;
 use kartik\helpers\Html;
 use kartik\widgets\FileInput;
@@ -34,7 +41,7 @@ $this->params['breadcrumbs'][] = Yii::t('media', 'List');
                 'dataProvider'=> $dataProvider,
                 'filterModel' => $searchModel,
                 'containerOptions' => [
-                    'class' => 'articles-items-pjax-container'
+                    'class' => 'media-pjax-container'
                 ],
                 'pjaxSettings'=>[
                     'neverTimeout' => true,
@@ -49,6 +56,7 @@ $this->params['breadcrumbs'][] = Yii::t('media', 'List');
                         'hAlign' => 'center',
                         'width' => '8%',
                         'value' => function ($model) {
+                            /** @var $model cinghie\media\models\Media */
                             return Html::img($model->getMediaUrl(),[ 'width' => '78px']);
                         },
                     ],
@@ -57,6 +65,7 @@ $this->params['breadcrumbs'][] = Yii::t('media', 'List');
                         'format' => 'html',
                         'hAlign' => 'center',
                         'value' => function ($model) {
+	                        /** @var $model cinghie\media\models\Media */
                             $url = urldecode(Url::toRoute(['/media/items/update', 'id' => $model->id ]));
                             return Html::a($model->title,$url).'<br>('.$model->filename.')';
                         }
@@ -71,6 +80,7 @@ $this->params['breadcrumbs'][] = Yii::t('media', 'List');
                         'width' => '7%',
                         'hAlign' => 'center',
                         'value' => function ($model) {
+	                        /** @var $model cinghie\media\models\Media */
                             return $model->getFormattedSize();
                         }
                     ],
@@ -84,6 +94,7 @@ $this->params['breadcrumbs'][] = Yii::t('media', 'List');
                         'hAlign' => 'center',
                         'width' => '7%',
                         'value' => function ($model) {
+	                        /** @var $model cinghie\media\models\Media */
                             return $model->getMimeTypeIcon();
                         }
                     ],

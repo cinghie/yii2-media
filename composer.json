@@ -7,7 +7,7 @@
         "yii2 upload",
         "yii2 media wordpress"
     ],
-    "homepage": "https://github.com/cinghie/yii2-articles",
+    "homepage": "https://github.com/cinghie/yii2-media",
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
     "authors": [
