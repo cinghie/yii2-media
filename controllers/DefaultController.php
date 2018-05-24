@@ -15,6 +15,7 @@ namespace cinghie\media\controllers;
 use Yii;
 use cinghie\media\models\Media;
 use cinghie\media\models\MediaSearch;
+use yii\base\InvalidArgumentException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
@@ -53,7 +54,7 @@ class DefaultController extends \yii\web\Controller
 	 * Display all Media models on Grid View
 	 *
 	 * @return string
-	 * @throws \yii\base\InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function actionIndex()
     {
@@ -72,7 +73,7 @@ class DefaultController extends \yii\web\Controller
 	 * Display all Media models on List View
 	 *
 	 * @return string
-	 * @throws \yii\base\InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function actionList()
 	{

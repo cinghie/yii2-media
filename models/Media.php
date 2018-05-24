@@ -97,14 +97,14 @@ class Media extends ActiveRecord
 	 *
 	 * @return string
 	 */
-	public function getMediaGrid($media)
+	private function getMediaGrid($media)
 	{
 		$attributes = $media->attributes;
 
 		$html = '<div class="col-md-2 col-sm-3 col-xs-6">';
 		$html .= '<div class="media-item">';
 		$html .= '<a href="#" class="thumbnail">';
-		$html .= '<img src="'.$media->getMediaUrl().'" alt="'.$attributes['title'].'" title="'.$attributes['title'].'">';
+		$html .= '<img src="'.$media->getMediaThumbsUrl('small',true).'" alt="'.$attributes['title'].'" title="'.$attributes['title'].'">';
 		$html .= '</a></div></div>';
 
 		return $html;
@@ -203,9 +203,15 @@ class Media extends ActiveRecord
 	 * @return string
 	 * @throws InvalidParamException
 	 */
-	public function getMediaUrl()
+	public function getMediaUrl($default = false)
 	{
-		return Yii::getAlias(Yii::$app->controller->module->mediaURL).$this->filename;
+		$mediaUrl = Yii::getAlias(Yii::$app->controller->module->mediaURL).$this->filename;
+
+		if($default && !file_exists($mediaUrl)) {
+			return Yii::getAlias(Yii::$app->controller->module->mediaURL).'image-not-found.jpg';
+		}
+
+		return $mediaUrl;
 	}
 
 	/**
@@ -214,9 +220,15 @@ class Media extends ActiveRecord
 	 * @return string
 	 * @throws InvalidParamException
 	 */
-	public function getMediaThumbsUrl($size = 'small')
+	public function getMediaThumbsUrl($size = 'small', $default = false)
 	{
-		return Yii::getAlias(Yii::$app->controller->module->mediaThumbsURL).'/'.$size.'/'.$this->filename;
+		$mediaThumbUrl = Yii::getAlias(Yii::$app->controller->module->mediaThumbsURL).'/'.$size.'/'.$this->filename;
+
+		if($default && !file_exists($mediaThumbUrl)) {
+			return Yii::getAlias(Yii::$app->controller->module->mediaURL).'image-not-found.jpg';
+		}
+
+		return $mediaThumbUrl;
 	}
 
 	/**

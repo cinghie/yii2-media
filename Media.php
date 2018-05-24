@@ -58,6 +58,7 @@ class Media extends Module
 	{
 		$this->createMediaDirectory();
 		$this->createMediaThumbsDirectory();
+		$this->copyDefaultImage();
 		$this->registerTranslations();
 		parent::init();
 	}
@@ -78,8 +79,6 @@ class Media extends Module
 
 	/**
 	 * Creating directory to save Media if not exist
-	 *
-	 * @param string $path file to create
 	 */
 	protected function createMediaDirectory()
 	{
@@ -90,8 +89,6 @@ class Media extends Module
 
 	/**
 	 * Creating directory to save Media Thumbs if not exist
-	 *
-	 * @param string $path file to create
 	 */
 	protected function createMediaThumbsDirectory()
 	{
@@ -108,6 +105,19 @@ class Media extends Module
 			if(!file_exists($thumbsPath.$size)) {
 				mkdir($thumbsPath.$size, 0755, true);
 			}
+		}
+	}
+
+	/**
+	 * Creating directory to save Media if not exist
+	 */
+	protected function copyDefaultImage()
+	{
+		$sourceImage  = Yii::getAlias('@vendor/cinghie/yii2-media/media/image-not-found.jpg');
+		$defaultImage = Yii::getAlias($this->mediaPath).'image-not-found.jpg';
+
+		if(!file_exists($defaultImage)) {
+			copy($sourceImage, $defaultImage);
 		}
 	}
 
