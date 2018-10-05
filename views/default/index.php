@@ -7,6 +7,8 @@
  * @var $this yii\web\View
  */
 
+use kartik\widgets\ActiveForm;
+
 $this->title = Yii::t('media', 'Media');
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -17,11 +19,21 @@ $this->params['breadcrumbs'][] = $this->title;
 ]) ?>
 
 <div class="row">
+
 	<div class="col-md-12">
+
 		<div class="collapse" id="collapseMedia">
-			<?= $model->getMediasWidget() ?>
+
+			<?php $form = ActiveForm::begin(['options' => ['enctype' =>'multipart/form-data']]) ?>
+
+				<?= $model->getMediasWidget() ?>
+
+			<?php ActiveForm::end() ?>
+
 		</div>
+
 	</div>
+
 </div>
 
 <div class="clearfix"></div>
