@@ -21,7 +21,6 @@ use yii\db\ActiveQuery;
  */
 class MediaQuery extends ActiveQuery
 {
-
     /**
      * @inheritdoc
      *
@@ -31,7 +30,7 @@ class MediaQuery extends ActiveQuery
      *
      * @return MediaQuery
      */
-    public function last($limit, $orderby = "id", $order = "DESC")
+    public function last($limit, $orderby = 'id', $order = 'DESC')
     {
         return $this->orderBy([$orderby => $order])->limit($limit);
     }

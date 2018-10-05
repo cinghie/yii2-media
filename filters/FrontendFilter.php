@@ -13,6 +13,7 @@
 namespace cinghie\media\filters;
 
 use Yii;
+use yii\base\Action;
 use yii\base\ActionFilter;
 use yii\web\NotFoundHttpException;
 
@@ -28,14 +29,14 @@ class FrontendFilter extends ActionFilter
     public $controllers = ['default'];
 
     /**
-     * @param \yii\base\Action $action
+     * @param Action $action
      *
      * @return bool
-     * @throws \yii\web\NotFoundHttpException
+     * @throws NotFoundHttpException
      */
     public function beforeAction($action)
     {
-        if (in_array($action->controller->id, $this->controllers)) {
+        if (in_array($action->controller->id, $this->controllers, true)) {
             throw new NotFoundHttpException(Yii::t('traits','Page not found'));
         }
 

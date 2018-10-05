@@ -82,8 +82,11 @@ class Media extends Module
 	 */
 	protected function createMediaDirectory()
 	{
-		if(!file_exists(Yii::getAlias($this->mediaPath))) {
-			mkdir($this->mediaPath, 0755, true);
+		if(!file_exists(Yii::getAlias($this->mediaPath)))
+		{
+			if (!mkdir($concurrentDirectory = $this->mediaPath, 0755, true) && !is_dir($concurrentDirectory)) {
+				throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+			}
 		}
 	}
 
@@ -101,9 +104,12 @@ class Media extends Module
 			'extra',
 		);
 
-		foreach($sizes as $size) {
+		foreach($sizes as $size)
+		{
 			if(!file_exists($thumbsPath.$size)) {
-				mkdir($thumbsPath.$size, 0755, true);
+				if (!mkdir($concurrentDirectory = $thumbsPath . $size, 0755, true) && !is_dir($concurrentDirectory)) {
+					throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+				}
 			}
 		}
 	}

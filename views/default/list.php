@@ -7,9 +7,9 @@
  * @var $this yii\web\View
  */
 
+use kartik\grid\CheckboxColumn;
 use kartik\grid\GridView;
 use kartik\helpers\Html;
-use kartik\widgets\FileInput;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = Yii::t('media', 'List');
                 ],
                 'columns' => [
                     [
-                        'class' => '\kartik\grid\CheckboxColumn'
+                        'class' => CheckboxColumn::class
                     ],
                     [
                         'attribute' => Yii::t('media', 'Media'),

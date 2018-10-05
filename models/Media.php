@@ -12,12 +12,15 @@
 
 namespace cinghie\media\models;
 
+use Exception;
+use Imagine\Exception\RuntimeException;
 use Yii;
 use cinghie\traits\AttachmentTrait;
 use cinghie\traits\ViewsHelpersTrait;
 use kartik\widgets\FileInput;
 use yii\base\InvalidParamException;
 use yii\db\ActiveRecord;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use yii\imagine\Image;
 use yii\web\UploadedFile;
@@ -31,6 +34,16 @@ use yii\web\UploadedFile;
  * @property int $hits
  *
  * @property Media $items
+ *
+ * @property string $formattedSize
+ * @property string $uploadMaxSize
+ * @property string $mimeTypeIcon
+ * @property array $mediaAllowed
+ * @property string $mediaPath
+ * @property string $mediaThumbsPath
+ * @property string[] $mediaType
+ * @property string $mediasWidget
+ * @property array $mediaAccepted
  */
 class Media extends ActiveRecord
 {
@@ -64,14 +77,16 @@ class Media extends ActiveRecord
     public function attributeLabels()
     {
         return array_merge(AttachmentTrait::attributeLabels(),[
-            'id' => Yii::t('media', 'ID'),
-            'hits' => Yii::t('media', 'Hits'),
-            'reference' => Yii::t('media', 'Reference'),
+            'id' => Yii::t('traits', 'ID'),
+            'hits' => Yii::t('traits', 'Hits'),
+            'reference' => Yii::t('traits', 'Reference'),
         ]);
     }
 
 	/**
 	 * Generate Mediaw Grid View
+	 *
+	 * @param ActiveDataProvider $dataProvider
 	 *
 	 * @return string
 	 */
@@ -89,11 +104,13 @@ class Media extends ActiveRecord
 		$html .= '</div>';
 		$html .= '<div class="clearfix"></div>';
 
-		echo $html;
+		return $html;
 	}
 
 	/**
 	 * Generate Media Grid View
+	 *
+	 * @param Media $media
 	 *
 	 * @return string
 	 */
@@ -101,7 +118,7 @@ class Media extends ActiveRecord
 	{
 		$attributes = $media->attributes;
 
-		$html = '<div class="col-md-2 col-sm-3 col-xs-6">';
+		$html  = '<div class="col-md-2 col-sm-3 col-xs-6">';
 		$html .= '<div class="media-item">';
 		$html .= '<a href="#" class="thumbnail">';
 		$html .= '<img src="'.$media->getMediaThumbsUrl('small',true).'" alt="'.$attributes['title'].'" title="'.$attributes['title'].'">';
@@ -114,11 +131,11 @@ class Media extends ActiveRecord
 	 * Generate Image Form Widget
 	 *
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function getMediasWidget()
 	{
-		/** @var $this \yii\base\Model */
+		/** @var $this Media */
 		return FileInput::widget([
 			'model' => $this,
 			'attribute' => 'items[]',
@@ -147,12 +164,12 @@ class Media extends ActiveRecord
 	 * @param string $mediaName
 	 *
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function getMediaWidget($mediaName = 'item')
 	{
 		/** @var $this \yii\base\Model */
-		$media = '<label class="control-label" for="items-photo_name">' .Yii::t('traits','Media'). '</label>';
+		$media = '<label class="control-label" for="items-photo_name">' .Yii::t('media','Media'). '</label>';
 		$media .= FileInput::widget([
 			'model' => $this,
 			'attribute' => $mediaName,
@@ -200,8 +217,9 @@ class Media extends ActiveRecord
 	/**
 	 * Fetch stored file url
 	 *
+	 * @param bool $default
+	 *
 	 * @return string
-	 * @throws InvalidParamException
 	 */
 	public function getMediaUrl($default = false)
 	{
@@ -217,8 +235,10 @@ class Media extends ActiveRecord
 	/**
 	 * Fetch stored file thumbs url
 	 *
+	 * @param string $size
+	 * @param bool $default
+	 *
 	 * @return string
-	 * @throws InvalidParamException
 	 */
 	public function getMediaThumbsUrl($size = 'small', $default = false)
 	{
@@ -234,13 +254,13 @@ class Media extends ActiveRecord
 	/**
 	 * Upload file to folder
 	 *
-	 * @param $fileName
-	 * @param $fileNameType
-	 * @param $filePath
-	 * @param $fileField
+	 * @param string $fileName
+	 * @param string $fileNameType
+	 * @param string $filePath
+	 * @param string $fileField
 	 *
 	 * @return UploadedFile|bool
-	 * @throws \yii\base\Exception
+	 * @throws Exception
 	 */
 	public function uploadFile($fileName,$fileNameType,$filePath,$fileField)
 	{
@@ -286,10 +306,10 @@ class Media extends ActiveRecord
 	/**
 	 * Create Thumb Images files
 	 *
-	 * @param $image
+	 * @param Media $media
 	 *
 	 * @return mixed the uploaded image instance
-	 * @throws \Imagine\Exception\RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function createThumbImages($media)
 	{
@@ -445,7 +465,7 @@ class Media extends ActiveRecord
      */
     public static function find()
     {
-        return new MediaQuery(get_called_class());
+        return new MediaQuery(static::class);
     }
 
 }

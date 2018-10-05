@@ -1,8 +1,11 @@
 <?php
 
-use cinghie\plupload\PluploadFullAsset;
-use kartik\widgets\FileInput;
-use yii\helpers\Url;
+/**
+ * @var $dataProvider yii\data\ActiveDataProvider
+ * @var $model cinghie\media\models\Media
+ * @var $searchModel cinghie\media\models\MediaSearch
+ * @var $this yii\web\View
+ */
 
 $this->title = Yii::t('media', 'Media');
 $this->params['breadcrumbs'][] = $this->title;
