@@ -21,6 +21,7 @@ use kartik\widgets\FileInput;
 use yii\base\InvalidParamException;
 use yii\db\ActiveRecord;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\imagine\Image;
 use yii\web\UploadedFile;
@@ -456,6 +457,22 @@ class Media extends ActiveRecord
 	public function getMediaType()
 	{
 		return explode('/',$this->mimetype);
+	}
+
+	/**
+	 * Return action create button
+	 *
+	 * @return string
+	 */
+	public function getCreateButton()
+	{
+		return '<div class="pull-right text-center" style="margin-right: 25px;">'.
+					Html::a(
+					'<i class="fa fa-plus-circle text-green"></i>',
+					'#collapseMedia' ,
+					[ 'class' => 'btn btn-mini', 'role' => 'button', 'data-toggle' => 'collapse', 'aria-expanded' => 'false', 'aria-controls' => 'collapseMedia' ]).'
+                    <div>'.Yii::t('traits','Create').'</div>
+                </div>';
 	}
 
     /**
