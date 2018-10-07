@@ -18,9 +18,8 @@ use yii\i18n\PhpMessageSource;
 
 class Media extends Module
 {
-
-	// Controller Namespace
-	public $controllerNamespace = 'cinghie\media\controllers';
+	// Select Media Name: casual or original
+	public $mediaNameType = 'casual';
 	
 	// Select Path To Upload Media
 	public $mediaPath = '@webroot/media/';
@@ -106,10 +105,9 @@ class Media extends Module
 
 		foreach($sizes as $size)
 		{
-			if(!file_exists($thumbsPath.$size)) {
-				if (!mkdir($concurrentDirectory = $thumbsPath . $size, 0755, true) && !is_dir($concurrentDirectory)) {
-					throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
-				}
+			if(!file_exists($thumbsPath . $size) && !mkdir($concurrentDirectory = $thumbsPath . $size, 0755, true) && !is_dir($concurrentDirectory))
+			{
+				throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
 			}
 		}
 	}
@@ -126,5 +124,4 @@ class Media extends Module
 			copy($sourceImage, $defaultImage);
 		}
 	}
-
 }

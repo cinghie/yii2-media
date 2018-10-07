@@ -10,8 +10,6 @@
 
     <div class="col-md-6">
 
-	    <?= $searchModel->getResetButton() ?>
-
 	    <?= $searchModel->getDeleteButton() ?>
 
 	    <?= $searchModel->getUpdateButton() ?>
