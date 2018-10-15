@@ -16,6 +16,7 @@ use Exception;
 use Imagine\Exception\RuntimeException;
 use Yii;
 use cinghie\traits\AttachmentTrait;
+use cinghie\traits\CreatedTrait;
 use cinghie\traits\TitleAliasTrait;
 use cinghie\traits\ViewsHelpersTrait;
 use kartik\widgets\FileInput;
@@ -31,6 +32,7 @@ use yii\web\UploadedFile;
  * This is the model class for table "{{%media}}".
  *
  * @property int $id
+ * @property string $originalname
  * @property string $reference
  * @property int $size
  * @property int $hits
@@ -49,7 +51,7 @@ use yii\web\UploadedFile;
  */
 class Media extends ActiveRecord
 {
-	use AttachmentTrait, TitleAliasTrait, ViewsHelpersTrait;
+	use AttachmentTrait, CreatedTrait, TitleAliasTrait, ViewsHelpersTrait;
 
 	public $items;
 
@@ -70,6 +72,7 @@ class Media extends ActiveRecord
             [['title', 'filename'], 'required'],
             [['hits'], 'integer'],
             [['reference'], 'string', 'max' => 32],
+            [['originalname'], 'string', 'max' => 255],
         ]);
     }
 
@@ -80,8 +83,9 @@ class Media extends ActiveRecord
     {
         return array_merge(AttachmentTrait::attributeLabels(),[
             'id' => Yii::t('traits', 'ID'),
-            'hits' => Yii::t('traits', 'Hits'),
+            'originalname' => Yii::t('media', 'Original Name'),
             'reference' => Yii::t('traits', 'Reference'),
+            'hits' => Yii::t('traits', 'Hits'),
         ]);
     }
 
@@ -291,10 +295,13 @@ class Media extends ActiveRecord
 		if($fileUpload) {
 			$media->title = $originalName;
 			$media->alias = $mediaAlias;
-			$media->extension = $mediaExt;
-			$media->reference = $reference;
 			$media->filename = $file->name;
+			$media->originalname = $originalName;
+			$media->reference = $reference;
+			$media->extension = $mediaExt;
 			$media->mimetype = $file->type;
+			$media->created = date('Y-m-d H:i:s');
+			$media->created_by = Yii::$app->user->id;
 			$media->size  = $file->size;
 			$media->save();
 		}
