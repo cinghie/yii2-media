@@ -13,12 +13,14 @@
 namespace cinghie\media\controllers;
 
 use Exception;
+use RuntimeException;
 use Yii;
 use cinghie\media\models\Media;
 use cinghie\media\models\MediaSearch;
 use yii\base\InvalidArgumentException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 class DefaultController extends \yii\web\Controller
 {
@@ -39,7 +41,7 @@ class DefaultController extends \yii\web\Controller
 					],
 				],
 				'denyCallback' => function () {
-					throw new \RuntimeException(Yii::t('traits','You are not allowed to access this page'));
+					throw new RuntimeException(Yii::t('traits','You are not allowed to access this page'));
 				}
 			],
 			'verbs' => [
@@ -67,16 +69,12 @@ class DefaultController extends \yii\web\Controller
 
 	    if ($model->load($post))
 	    {
-		    // Upload Image and Thumb if is not Null
-		    $mediaPath          = Yii::getAlias(Yii::$app->controller->module->itemImagePath);
-		    $mediaThumbsPath    = Yii::getAlias(Yii::$app->controller->module->itemThumbPath);
-		    $mediaNameType      = Yii::$app->controller->module->mediaType;
-		    $mediaThumbsOptions = Yii::$app->controller->module->mediaThumbsOptions;
-		    $mediaName          = $model->title;
-		    $fileField          = 'items[]';
-
 		    // Create UploadFile Instance
-		    $media = $model->uploadFile($mediaName,$mediaNameType,$mediaThumbsPath,$fileField);
+		    $model->items = UploadedFile::getInstances($model, 'items');
+
+		    foreach ($model->items as $item) {
+			    $model->uploadMedia($item);
+		    }
 	    }
 
         return $this->render('index', [

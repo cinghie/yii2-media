@@ -16,6 +16,7 @@ use Exception;
 use Imagine\Exception\RuntimeException;
 use Yii;
 use cinghie\traits\AttachmentTrait;
+use cinghie\traits\TitleAliasTrait;
 use cinghie\traits\ViewsHelpersTrait;
 use kartik\widgets\FileInput;
 use yii\base\InvalidParamException;
@@ -48,7 +49,7 @@ use yii\web\UploadedFile;
  */
 class Media extends ActiveRecord
 {
-	use AttachmentTrait, ViewsHelpersTrait;
+	use AttachmentTrait, TitleAliasTrait, ViewsHelpersTrait;
 
 	public $items;
 
@@ -141,8 +142,10 @@ class Media extends ActiveRecord
 			'model' => $this,
 			'attribute' => 'items[]',
 			'name' => 'items[]',
+			'language' => substr(Yii::$app->language, -2),
 			'options'=>[
-				'accept' => $this->getMediaAccepted()
+				'accept' => $this->getMediaAccepted(),
+				'multiple' => true
 			],
 			'pluginOptions' => [
 				'allowedFileExtensions' => $this->getMediaAllowed(),
@@ -255,53 +258,48 @@ class Media extends ActiveRecord
 	/**
 	 * Upload file to folder
 	 *
-	 * @param string $fileName
-	 * @param string $fileNameType
-	 * @param string $filePath
-	 * @param string $fileField
+	 * @param UploadedFile $file
+	 * @param string $reference
 	 *
-	 * @return UploadedFile|bool
-	 * @throws Exception
+	 * @return Media|bool
+	 * @throws \yii\base\Exception
 	 */
-	public function uploadFile($fileName,$fileNameType,$filePath,$fileField)
+	public function uploadMedia($file, $reference = 'yii2-media')
 	{
-		// get the uploaded file instance. for multiple file uploads
-		// the following data will return an array (you may need to use
-		// getInstances method)
-		$file = UploadedFile::getInstance($this, $fileField);
-
 		// if no file was uploaded abort the upload
-		if ($file === null) {
+		if ($file === null || !$file) {
 			return false;
 		}
 
-		// set fileName by fileNameType
-		switch($fileNameType)
-		{
-			case 'original':
-				$name = $file->baseName; // get original file name
-				break;
-			case 'casual':
-				$name = Yii::$app->security->generateRandomString(32); // generate a unique file name
-				break;
-			default:
-				$name = $fileName; // get item title like filename
-				break;
+		$media = new self();
+
+		// set originale media name
+		$originalName = $file->name;
+		// generate media alias
+		$mediaAlias = $this->generateAlias($originalName);
+		// generate a unique media name
+		$mediaName = Yii::$app->security->generateRandomString(32);
+		// get media path from controller
+		$mediaPath = Yii::getAlias(Yii::$app->controller->module->mediaPath);
+		// get media extension
+		$mediaExt = $file->extension;
+		// update file->name
+		$file->name = $mediaName.".{$mediaExt}";
+		// save images to imagePath
+		$fileUpload = $file->saveAs($mediaPath.$mediaName.".{$mediaExt}");
+
+		if($fileUpload) {
+			$media->title = $originalName;
+			$media->alias = $mediaAlias;
+			$media->extension = $mediaExt;
+			$media->reference = $reference;
+			$media->filename = $file->name;
+			$media->mimetype = $file->type;
+			$media->size  = $file->size;
+			$media->save();
 		}
 
-		// file extension
-		$fileExt = $file->extension;
-		// purge filename
-		$fileName = $name;
-		// set field to filename.extensions
-		$this->$fileField = $fileName.".{$fileExt}";
-		// update file->name
-		$file->name = $fileName.".{$fileExt}";
-		// save images to imagePath
-		$file->saveAs($filePath.$fileName.".{$fileExt}");
-
-		// the uploaded file instance
-		return $file;
+		return $media;
 	}
 
 	/**
