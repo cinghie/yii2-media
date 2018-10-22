@@ -46,6 +46,16 @@ class Media extends Module
 
 	// Media Rules
 	public $mediaRoles = ['admin'];
+	
+	// Slugify Options
+	public $slugifyOptions = [
+		'separator' => '-',
+		'lowercase' => true,
+		'trim' => true,
+		'rulesets'  => [
+			'default'
+		]
+	];
 
 	// Show Titles in the views
 	public $showTitles = true;
