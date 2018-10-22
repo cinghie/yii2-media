@@ -46,7 +46,7 @@ class Media extends Module
 
 	// Media Rules
 	public $mediaRoles = ['admin'];
-	
+
 	// Slugify Options
 	public $slugifyOptions = [
 		'separator' => '-',
