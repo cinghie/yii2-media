@@ -93,7 +93,7 @@ $this->params['breadcrumbs'][] = Yii::t('traits', 'List');
 					'width' => '7%',
 					'value' => function ($model) {
 						/** @var $model cinghie\media\models\Media */
-						return $model->getMimeTypeIcon();
+						return $model->getAttachmentTypeIcon();
 					}
 				],
 				[

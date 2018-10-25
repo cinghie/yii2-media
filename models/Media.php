@@ -49,6 +49,7 @@ use yii\web\UploadedFile;
  * @property string[] $mediaType
  * @property string $mediasWidget
  * @property array $mediaAccepted
+ * @property string $createButton
  */
 class Media extends ActiveRecord
 {
@@ -90,119 +91,6 @@ class Media extends ActiveRecord
             'hits' => Yii::t('traits', 'Hits'),
         ]);
     }
-
-	/**
-	 * Generate Mediaw Grid View
-	 *
-	 * @param ActiveDataProvider $dataProvider
-	 *
-	 * @return string
-	 */
-	public function getMediasGrid($dataProvider)
-	{
-		$medias = $dataProvider->getModels();
-
-		$html = '';
-		$html .= '<div class="row">';
-
-		foreach ($medias as $media) {
-			$html .= $this->getMediaGrid($media);
-		}
-
-		$html .= '</div>';
-		$html .= '<div class="clearfix"></div>';
-
-		return $html;
-	}
-
-	/**
-	 * Generate Media Grid View
-	 *
-	 * @param Media $media
-	 *
-	 * @return string
-	 */
-	private function getMediaGrid($media)
-	{
-		$attributes = $media->attributes;
-
-		$html  = '<div class="col-md-2 col-sm-3 col-xs-6">';
-		$html .= '<div class="media-item">';
-		$html .= '<a href="#" class="thumbnail">';
-		$html .= '<img src="'.$media->getMediaThumbsUrl('small',true).'" alt="'.$attributes['title'].'" title="'.$attributes['title'].'">';
-		$html .= '</a></div></div>';
-
-		return $html;
-	}
-
-	/**
-	 * Generate Image Form Widget
-	 *
-	 * @return string
-	 * @throws Exception
-	 */
-	public function getMediasWidget()
-	{
-		/** @var $this Media */
-		return FileInput::widget([
-			'model' => $this,
-			'attribute' => 'items[]',
-			'name' => 'items[]',
-			'language' => substr(Yii::$app->language, -2),
-			'options'=>[
-				'accept' => $this->getMediaAccepted(),
-				'multiple' => true
-			],
-			'pluginOptions' => [
-				'allowedFileExtensions' => $this->getMediaAllowed(),
-				'previewFileType' => 'image',
-				'showPreview' => true,
-				'showCaption' => true,
-				'showRemove' => true,
-				'showUpload' => true,
-				'initialPreview' => $this->items ? $this->getMediaUrl() : false,
-				'initialPreviewAsData' => $this->items ? true : false,
-				'initialPreviewConfig' => $this->isNewRecord ? [] : [ ['url' => Url::to(['deletemedia', 'id' => $this->id])] ],
-				'overwriteInitial' => $this->items ? true : false
-			]
-		]);
-	}
-
-	/**
-	 * Generate Image Form Widget
-	 *
-	 * @param string $mediaName
-	 *
-	 * @return string
-	 * @throws Exception
-	 */
-	public function getMediaWidget($mediaName = 'item')
-	{
-		/** @var $this \yii\base\Model */
-		$media = '<label class="control-label" for="items-photo_name">' .Yii::t('media','Media'). '</label>';
-		$media .= FileInput::widget([
-			'model' => $this,
-			'attribute' => $mediaName,
-			'name' => $mediaName,
-			'options'=>[
-				'accept' => $this->getMediaAccepted()
-			],
-			'pluginOptions' => [
-				'allowedFileExtensions' => $this->getMediaAllowed(),
-				'previewFileType' => 'image',
-				'showPreview' => true,
-				'showCaption' => true,
-				'showRemove' => true,
-				'showUpload' => false,
-				'initialPreview' => $this->items ? $this->getMediaUrl() : false,
-				'initialPreviewAsData' => $this->items ? true : false,
-				'initialPreviewConfig' => $this->isNewRecord ? [] : [ ['url' => Url::to(['deletemedia', 'id' => $this->id])] ],
-				'overwriteInitial' => $this->items ? true : false
-			]
-		]);
-
-		return $media;
-	}
 
 	/**
 	 * Fetch stored file name with complete path
@@ -402,68 +290,13 @@ class Media extends ActiveRecord
 	}
 
 	/**
-	 * Get Attachmente Type Image by Type
-	 *
-	 * @return string
-	 */
-	public function getMimeTypeIcon()
-	{
-		$applications = [
-			'csv' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
-			'pdf' => '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
-			'plain' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
-			'text' => '<i class="fa fa-file-text-o" aria-hidden="true"></i>',
-			'vnd.ms-excel' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
-		];
-
-		$texts = [
-			'csv' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
-			'pdf' => '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
-			'plain' => '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
-			'text' => '<i class="fa fa-file-text-o" aria-hidden="true"></i>',
-		];
-
-		$types = [
-			'audio' => '<i class="fa fa-file-audio-o" aria-hidden="true"></i>',
-			'archive' => '<i class="fa fa-file-archive-o" aria-hidden="true"></i>',
-			'image' => '<i class="fa fa-file-image-o" aria-hidden="true"></i>',
-			'video' => '<i class="fa fa-file-video-o" aria-hidden="true"></i>',
-		];
-
-		$mimetype = $this->getMediaType();
-
-		foreach($types as $type => $icon)
-		{
-			if (isset($mimetype[0]) && $mimetype[0] === $type) {
-				return $icon.'<br>'.$this->mimetype;
-			}
-		}
-
-		foreach($applications as $application => $icon)
-		{
-			if (isset($mimetype[1]) && $mimetype[1] === $application) {
-				return $icon.'<br>'.$this->mimetype;
-			}
-		}
-
-		foreach($texts as $text => $icon)
-		{
-			if (isset($mimetype[1]) && $mimetype[1] === $text) {
-				return $icon.'<br>'.$this->mimetype;
-			}
-		}
-
-		return '<i class="fa fa-file-o" aria-hidden="true"></i>'.'<br>'.$this->mimetype;
-	}
-
-	/**
 	 * Generate Attachment type from mimetype
 	 *
 	 * @return string[]
 	 */
 	public function getMediaType()
 	{
-		return explode('/',$this->mimetype);
+		return $this->getAttachmentType();
 	}
 
 	/**
@@ -480,6 +313,119 @@ class Media extends ActiveRecord
 					[ 'class' => 'btn btn-mini', 'role' => 'button', 'data-toggle' => 'collapse', 'aria-expanded' => 'false', 'aria-controls' => 'collapseMedia' ]).'
                     <div>'.Yii::t('traits','Create').'</div>
                 </div>';
+	}
+
+	/**
+	 * Generate Mediaw Grid View
+	 *
+	 * @param ActiveDataProvider $dataProvider
+	 *
+	 * @return string
+	 */
+	public function getMediasGrid($dataProvider)
+	{
+		$medias = $dataProvider->getModels();
+
+		$html = '';
+		$html .= '<div class="row">';
+
+		foreach ($medias as $media) {
+			$html .= $this->getMediaGrid($media);
+		}
+
+		$html .= '</div>';
+		$html .= '<div class="clearfix"></div>';
+
+		return $html;
+	}
+
+	/**
+	 * Generate Media Grid View
+	 *
+	 * @param Media $media
+	 *
+	 * @return string
+	 */
+	private function getMediaGrid($media)
+	{
+		$attributes = $media->attributes;
+
+		$html  = '<div class="col-md-2 col-sm-3 col-xs-6">';
+		$html .= '<div class="media-item">';
+		$html .= '<a href="#" class="thumbnail">';
+		$html .= '<img src="'.$media->getMediaThumbsUrl('small',true).'" alt="'.$attributes['title'].'" title="'.$attributes['title'].'">';
+		$html .= '</a></div></div>';
+
+		return $html;
+	}
+
+	/**
+	 * Generate Image Form Widget
+	 *
+	 * @return string
+	 * @throws Exception
+	 */
+	public function getMediasWidget()
+	{
+		/** @var $this Media */
+		return FileInput::widget([
+			'model' => $this,
+			'attribute' => 'items[]',
+			'name' => 'items[]',
+			'language' => substr(Yii::$app->language, -2),
+			'options'=>[
+				'accept' => $this->getMediaAccepted(),
+				'multiple' => true
+			],
+			'pluginOptions' => [
+				'allowedFileExtensions' => $this->getMediaAllowed(),
+				'previewFileType' => 'image',
+				'showPreview' => true,
+				'showCaption' => true,
+				'showRemove' => true,
+				'showUpload' => true,
+				'initialPreview' => $this->items ? $this->getMediaUrl() : false,
+				'initialPreviewAsData' => $this->items ? true : false,
+				'initialPreviewConfig' => $this->isNewRecord ? [] : [ ['url' => Url::to(['deletemedia', 'id' => $this->id])] ],
+				'overwriteInitial' => $this->items ? true : false
+			]
+		]);
+	}
+
+	/**
+	 * Generate Image Form Widget
+	 *
+	 * @param string $mediaName
+	 *
+	 * @return string
+	 * @throws Exception
+	 */
+	public function getMediaWidget($mediaName = 'item')
+	{
+		/** @var $this \yii\base\Model */
+		$media = '<label class="control-label" for="items-photo_name">' .Yii::t('media','Media'). '</label>';
+		$media .= FileInput::widget([
+			'model' => $this,
+			'attribute' => $mediaName,
+			'name' => $mediaName,
+			'options'=>[
+				'accept' => $this->getMediaAccepted()
+			],
+			'pluginOptions' => [
+				'allowedFileExtensions' => $this->getMediaAllowed(),
+				'previewFileType' => 'image',
+				'showPreview' => true,
+				'showCaption' => true,
+				'showRemove' => true,
+				'showUpload' => false,
+				'initialPreview' => $this->items ? $this->getMediaUrl() : false,
+				'initialPreviewAsData' => $this->items ? true : false,
+				'initialPreviewConfig' => $this->isNewRecord ? [] : [ ['url' => Url::to(['deletemedia', 'id' => $this->id])] ],
+				'overwriteInitial' => $this->items ? true : false
+			]
+		]);
+
+		return $media;
 	}
 
     /**

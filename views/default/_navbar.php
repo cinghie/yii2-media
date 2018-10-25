@@ -1,4 +1,4 @@
-<div class="row" style="margin: 0 0 15px 0;">
+<div class="row">
 
 	<div class="col-md-6 pull-left text-left">
 
@@ -19,3 +19,5 @@
     </div>
 
 </div>
+
+<div class="separator"></div>

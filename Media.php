@@ -35,14 +35,14 @@ class Media extends Module
 
 	// Select Media Thumbs Options
 	public $mediaThumbsOptions =	[
-		'small'  => ['quality' => 80, 'width' => 150, 'height' => 150],
-		'medium' => ['quality' => 80, 'width' => 250, 'height' => 250],
-		'large'  => ['quality' => 80, 'width' => 400, 'height' => 400],
-		'extra'  => ['quality' => 80, 'width' => 800, 'height' => 800],
+		'small'  => ['quality' => 90, 'width' => 250, 'height' => 250],
+		'medium' => ['quality' => 90, 'width' => 680, 'height' => 680],
+		'large'  => ['quality' => 90, 'width' => 1280, 'height' => 1280],
+		'extra'  => ['quality' => 90, 'width' => 1980, 'height' => 1980],
 	];
 
 	// Select Media Types allowed
-	public $mediaType = ['jpg','jpeg','gif','png','csv','pdf','txt','doc','docs'];
+	public $mediaType = ['svg','jpg','jpeg','gif','png','csv','xls','xlx','pdf','txt','doc','docs','mp3','mp4'];
 
 	// Media Rules
 	public $mediaRoles = ['admin'];
@@ -91,11 +91,9 @@ class Media extends Module
 	 */
 	protected function createMediaDirectory()
 	{
-		if(!file_exists(Yii::getAlias($this->mediaPath)))
+		if(!file_exists(Yii::getAlias($this->mediaPath)) && !mkdir($concurrentDirectory = $this->mediaPath, 0755, true) && !is_dir($concurrentDirectory))
 		{
-			if (!mkdir($concurrentDirectory = $this->mediaPath, 0755, true) && !is_dir($concurrentDirectory)) {
-				throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
-			}
+			throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
 		}
 	}
 

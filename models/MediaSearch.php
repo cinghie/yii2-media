@@ -26,7 +26,7 @@ class MediaSearch extends Media
     {
         return [
             [['id', 'size', 'hits'], 'integer'],
-            [['title','alias','reference','filename','extension','mimetype'], 'safe'],
+            [['title','alias','reference','filename','duration','extension','mimetype'], 'safe'],
         ];
     }
 
