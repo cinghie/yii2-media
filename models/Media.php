@@ -179,8 +179,10 @@ class Media extends ActiveRecord
 		$mediaExt = $file->extension;
 		// update file->name
 		$file->name = $mediaName.".{$mediaExt}";
+		// file full path
+		$fileFullPath = $mediaPath.$mediaName.".{$mediaExt}";
 		// save images to imagePath
-		$fileUpload = $file->saveAs($mediaPath.$mediaName.".{$mediaExt}");
+		$fileUpload = $file->saveAs($fileFullPath);
 
 		if($fileUpload) {
 			$media->title = $originalName;
@@ -188,6 +190,7 @@ class Media extends ActiveRecord
 			$media->filename = $file->name;
 			$media->originalname = $originalName;
 			$media->reference = $reference;
+			$media->duration = $this->getVideoDuration($fileFullPath);
 			$media->extension = $mediaExt;
 			$media->mimetype = $file->type;
 			$media->created = date('Y-m-d H:i:s');
