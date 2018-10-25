@@ -14,7 +14,7 @@ use yii\helpers\Url;
 
 $this->title = Yii::t('media', 'Media');
 $this->params['breadcrumbs'][] = $this->title;
-$this->params['breadcrumbs'][] = Yii::t('media', 'List');
+$this->params['breadcrumbs'][] = Yii::t('traits', 'List');
 
 ?>
 

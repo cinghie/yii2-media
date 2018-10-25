@@ -34,6 +34,7 @@ use yii\web\UploadedFile;
  * @property int $id
  * @property string $originalname
  * @property string $reference
+ * @property string $duration
  * @property int $size
  * @property int $hits
  *
@@ -71,7 +72,7 @@ class Media extends ActiveRecord
         return array_merge(AttachmentTrait::rules(), [
             [['title', 'filename'], 'required'],
             [['hits'], 'integer'],
-            [['reference'], 'string', 'max' => 32],
+            [['duration','reference'], 'string', 'max' => 32],
             [['originalname'], 'string', 'max' => 255],
         ]);
     }
@@ -83,7 +84,8 @@ class Media extends ActiveRecord
     {
         return array_merge(AttachmentTrait::attributeLabels(),[
             'id' => Yii::t('traits', 'ID'),
-            'originalname' => Yii::t('media', 'Original Name'),
+            'duration' => Yii::t('traits', 'Duration'),
+            'originalname' => Yii::t('traits', 'Original Name'),
             'reference' => Yii::t('traits', 'Reference'),
             'hits' => Yii::t('traits', 'Hits'),
         ]);

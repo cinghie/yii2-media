@@ -29,6 +29,7 @@ class m151021_200526_create_media_table extends Migration
             'reference' => $this->string(32),
             'extension' => $this->string(12)->notNull(),
             'mimetype' => $this->string(255)->notNull(),
+            'duration' => $this->string(32)->notNull(),
             'size' => $this->integer(32)->notNull(),
             'created_by' => $this->integer(11)->defaultValue(null),
             'created' => $this->dateTime()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),

@@ -19,7 +19,8 @@
     ],
     "require": {
         "yiisoft/yii2": "~2.0.12",
-        "cinghie/yii2-traits": "*"
+        "cinghie/yii2-traits": "*",
+        "james-heinrich/getid3": "*"
     },
     "autoload": {
         "psr-4": {
