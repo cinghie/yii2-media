@@ -13,6 +13,7 @@
 namespace cinghie\media\models;
 
 use Exception;
+use getid3_exception;
 use Imagine\Exception\RuntimeException;
 use Yii;
 use cinghie\traits\AttachmentTrait;
@@ -93,13 +94,49 @@ class Media extends ActiveRecord
     }
 
 	/**
+	 * Before delete Media
+	 *
+	 * @throws InvalidParamException
+	 */
+	public function beforeDelete()
+	{
+		/** @var Media $this */
+		$this->deleteFile();
+
+		return parent::beforeDelete();
+	}
+
+	/**
+	 * Delete file Media
+	 *
+	 * @return mixed
+	 * @throws InvalidParamException
+	 */
+	public function deleteFile()
+	{
+		$file = $this->mediaPath;
+
+		// check if image exists on server
+		if ( empty($this->filename) || !file_exists($file) ) {
+			return false;
+		}
+
+		// check if uploaded file can be deleted on server
+		if (unlink($file)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Fetch stored file name with complete path
 	 *
 	 * @return string
 	 * @throws InvalidParamException
 	 */
 	public function getMediaPath() {
-		return Yii::getAlias(Yii::$app->controller->module->mediaPath).$this->filename;
+		return Yii::getAlias(Yii::$app->getModule('media')->mediaPath).$this->filename;
 	}
 
 	/**
@@ -109,7 +146,7 @@ class Media extends ActiveRecord
 	 * @throws InvalidParamException
 	 */
 	public function getMediaThumbsPath() {
-		return Yii::getAlias(Yii::$app->controller->module->mediaThumbsPath).$this->filename;
+		return Yii::getAlias(Yii::$app->getModule('media')->mediaThumbsPath).$this->filename;
 	}
 
 	/**
@@ -121,10 +158,10 @@ class Media extends ActiveRecord
 	 */
 	public function getMediaUrl($default = false)
 	{
-		$mediaUrl = Yii::getAlias(Yii::$app->controller->module->mediaURL).$this->filename;
+		$mediaUrl = Yii::getAlias(Yii::$app->getModule('media')->mediaURL).$this->filename;
 
 		if($default && !file_exists($mediaUrl)) {
-			return Yii::getAlias(Yii::$app->controller->module->mediaURL).'image-not-found.jpg';
+			return Yii::getAlias(Yii::$app->getModule('media')->mediaURL).'image-not-found.jpg';
 		}
 
 		return $mediaUrl;
@@ -140,10 +177,10 @@ class Media extends ActiveRecord
 	 */
 	public function getMediaThumbsUrl($size = 'small', $default = false)
 	{
-		$mediaThumbUrl = Yii::getAlias(Yii::$app->controller->module->mediaThumbsURL).'/'.$size.'/'.$this->filename;
+		$mediaThumbUrl = Yii::getAlias(Yii::$app->getModule('media')->mediaThumbsURL).'/'.$size.'/'.$this->filename;
 
 		if($default && !file_exists($mediaThumbUrl)) {
-			return Yii::getAlias(Yii::$app->controller->module->mediaURL).'image-not-found.jpg';
+			return Yii::getAlias(Yii::$app->getModule('media')->mediaURL).'image-not-found.jpg';
 		}
 
 		return $mediaThumbUrl;
@@ -155,8 +192,9 @@ class Media extends ActiveRecord
 	 * @param UploadedFile $file
 	 * @param string $reference
 	 *
-	 * @return Media|bool
-	 * @throws \yii\base\Exception
+	 * @return Media | bool
+	 * @throws Exception
+	 * @throws getid3_exception
 	 */
 	public function uploadMedia($file, $reference = 'yii2-media')
 	{
@@ -174,7 +212,7 @@ class Media extends ActiveRecord
 		// generate a unique media name
 		$mediaName = Yii::$app->security->generateRandomString(32);
 		// get media path from controller
-		$mediaPath = Yii::getAlias(Yii::$app->controller->module->mediaPath);
+		$mediaPath = Yii::getAlias(Yii::$app->getModule('media')->mediaPath);
 		// get media extension
 		$mediaExt = $file->extension;
 		// update file->name
@@ -207,27 +245,27 @@ class Media extends ActiveRecord
 	 *
 	 * @param Media $media
 	 *
-	 * @return mixed the uploaded image instance
+	 * @return mixed
 	 * @throws RuntimeException
 	 */
 	public function createThumbImages($media)
 	{
-		$imagePath  = Yii::getAlias(Yii::$app->controller->module->mediaPath);
-		$imgOptions = Yii::$app->controller->module->mediaThumbsOptions;
-		$thumbsPath = Yii::getAlias(Yii::$app->controller->module->mediaThumbsPath);
+		$imagePath  = Yii::getAlias(Yii::$app->getModule('media')->mediaPath);
+		$thumbsPath = Yii::getAlias(Yii::$app->getModule('media')->mediaThumbsPath);
 
 		$imageName = $media->filename;
 		$imageLink = $imagePath.$media->filename;
+		$imageOptions = Yii::$app->getModule('media')->mediaThumbsOptions;
 
 		// Save Image Thumbs
-		Image::thumbnail($imageLink, $imgOptions['small']['width'], $imgOptions['small']['height'])
-		     ->save( $thumbsPath . 'small/' . $imageName, [ 'quality' => $imgOptions['small']['quality']]);
-		Image::thumbnail($imageLink, $imgOptions['medium']['width'], $imgOptions['medium']['height'])
-		     ->save( $thumbsPath . 'medium/' . $imageName, [ 'quality' => $imgOptions['medium']['quality']]);
-		Image::thumbnail($imageLink, $imgOptions['large']['width'], $imgOptions['large']['height'])
-		     ->save( $thumbsPath . 'large/' . $imageName, [ 'quality' => $imgOptions['large']['quality']]);
-		Image::thumbnail($imageLink, $imgOptions['extra']['width'], $imgOptions['extra']['height'])
-		     ->save( $thumbsPath . 'extra/' . $imageName, [ 'quality' => $imgOptions['extra']['quality']]);
+		Image::thumbnail($imageLink, $imageOptions['small']['width'], $imageOptions['small']['height'])
+		     ->save( $thumbsPath . 'small/' . $imageName, [ 'quality' => $imageOptions['small']['quality']]);
+		Image::thumbnail($imageLink, $imageOptions['medium']['width'], $imageOptions['medium']['height'])
+		     ->save( $thumbsPath . 'medium/' . $imageName, [ 'quality' => $imageOptions['medium']['quality']]);
+		Image::thumbnail($imageLink, $imageOptions['large']['width'], $imageOptions['large']['height'])
+		     ->save( $thumbsPath . 'large/' . $imageName, [ 'quality' => $imageOptions['large']['quality']]);
+		Image::thumbnail($imageLink, $imageOptions['extra']['width'], $imageOptions['extra']['height'])
+		     ->save( $thumbsPath . 'extra/' . $imageName, [ 'quality' => $imageOptions['extra']['quality']]);
 
 		return true;
 	}
@@ -266,7 +304,7 @@ class Media extends ActiveRecord
 	 */
 	public function getMediaAllowed()
 	{
-		return Yii::$app->controller->module->mediaType;
+		return Yii::$app->getModule('media')->mediaType;
 	}
 
 	/**
