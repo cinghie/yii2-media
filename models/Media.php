@@ -103,6 +103,10 @@ class Media extends ActiveRecord
 		/** @var Media $this */
 		$this->deleteFile();
 
+		if (strpos($this->mimetype, 'image') !== false) {
+			$this->deleteThumbs();
+		}
+
 		return parent::beforeDelete();
 	}
 
@@ -127,6 +131,34 @@ class Media extends ActiveRecord
 		}
 
 		return false;
+	}
+
+	public function deleteThumbs()
+	{
+		$thumbPath = Yii::getAlias( Yii::$app->getModule('media')->mediaThumbsPath  );
+
+		$thumbS  = $thumbPath . 'small/' . $this->filename;
+		$thumbM  = $thumbPath . 'medium/' . $this->filename;
+		$thumbL  = $thumbPath . 'large/' . $this->filename;
+		$thumbXL = $thumbPath . 'extra/' . $this->filename;
+
+		if ( !empty($this->filename) || file_exists($thumbS) ) {
+			unlink($thumbS);
+		}
+
+		if ( !empty($this->filename) || file_exists($thumbM) ) {
+			unlink($thumbM);
+		}
+
+		if ( !empty($this->filename) || file_exists($thumbL) ) {
+			unlink($thumbL);
+		}
+
+		if ( !empty($this->filename) || file_exists($thumbXL) ) {
+			unlink($thumbXL);
+		}
+
+		return true;
 	}
 
 	/**
@@ -235,6 +267,10 @@ class Media extends ActiveRecord
 			$media->created_by = Yii::$app->user->id;
 			$media->size  = $file->size;
 			$media->save();
+		}
+
+		if($media->id !== null && strpos($media->mimetype, 'image') !== false) {
+			$this->createThumbImages($media);
 		}
 
 		return $media;

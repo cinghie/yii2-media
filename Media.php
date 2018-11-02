@@ -42,7 +42,7 @@ class Media extends Module
 	];
 
 	// Select Media Types allowed
-	public $mediaType = ['svg','jpg','jpeg','gif','png','csv','xls','xlx','pdf','txt','doc','docs','mp3','mp4'];
+	public $mediaType = ['jpg','jpeg','gif','png','csv','xls','xlx','pdf','txt','doc','docs','mp3','mp4'];
 
 	// Media Rules
 	public $mediaRoles = ['admin'];
