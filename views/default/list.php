@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = Yii::t('traits', 'List');
 					'class' => CheckboxColumn::class
 				],
 				[
-					'attribute' => Yii::t('media', 'Media'),
+					'attribute' => Yii::t('traits', 'Preview'),
 					'format' => 'raw',
 					'hAlign' => 'center',
 					'width' => '8%',
