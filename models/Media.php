@@ -144,8 +144,6 @@ class Media extends ActiveRecord
 
 		$thumbVideo = $thumbPath . 'video/' . $this->filename . '.jpg';
 
-		echo $thumbVideo; exit();
-
 		if ( !empty($this->filename) || file_exists($thumbS) ) {
 			unlink($thumbS);
 		}
@@ -217,7 +215,15 @@ class Media extends ActiveRecord
 	 */
 	public function getMediaThumbsUrl($size = 'small', $default = false)
 	{
-		$mediaThumbUrl = Yii::getAlias(Yii::$app->getModule('media')->mediaThumbsURL).'/'.$size.'/'.$this->filename;
+		$mediaThumbUrl = '';
+
+		if (strpos($this->mimetype, 'image') !== false) {
+			$mediaThumbUrl = Yii::getAlias(Yii::$app->getModule('media')->mediaThumbsURL).'/'.$size.'/'.$this->filename;
+		}
+
+		if (strpos($this->mimetype, 'video') !== false) {
+			$mediaThumbUrl = Yii::getAlias(Yii::$app->getModule('media')->mediaThumbsURL).'/video/'.$this->filename.'.jpg';
+		}
 
 		if($default && !file_exists($mediaThumbUrl)) {
 			return Yii::getAlias(Yii::$app->getModule('media')->mediaURL).'image-not-found.jpg';

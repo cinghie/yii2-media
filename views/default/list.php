@@ -61,7 +61,7 @@ $this->registerJs('$(document).ready(function()
 				'width' => '8%',
 				'value' => function ($model) {
 					/** @var $model cinghie\media\models\Media */
-					return Html::img($model->getMediaUrl(),[ 'width' => '78px']);
+					return Html::img($model->getMediaThumbsUrl(),[ 'width' => '78px']);
 				},
 			],
 			[
@@ -124,7 +124,7 @@ $this->registerJs('$(document).ready(function()
 		'panel' => [
 			'heading' => '<h3 class="panel-title"><i class="fa fa-cloud-upload"></i></h3>',
 			'type' => 'success',
-		],
+		]
 	]) ?>
 
 </div>
