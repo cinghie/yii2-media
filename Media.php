@@ -109,6 +109,7 @@ class Media extends Module
 			'medium',
 			'large',
 			'extra',
+			'video'
 		);
 
 		foreach($sizes as $size)

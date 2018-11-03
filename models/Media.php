@@ -142,6 +142,10 @@ class Media extends ActiveRecord
 		$thumbL  = $thumbPath . 'large/' . $this->filename;
 		$thumbXL = $thumbPath . 'extra/' . $this->filename;
 
+		$thumbVideo = $thumbPath . 'video/' . $this->filename . '.jpg';
+
+		echo $thumbVideo; exit();
+
 		if ( !empty($this->filename) || file_exists($thumbS) ) {
 			unlink($thumbS);
 		}
@@ -156,6 +160,10 @@ class Media extends ActiveRecord
 
 		if ( !empty($this->filename) || file_exists($thumbXL) ) {
 			unlink($thumbXL);
+		}
+
+		if ( !empty($this->filename) || file_exists($thumbVideo) ) {
+			unlink($thumbVideo);
 		}
 
 		return true;
@@ -269,39 +277,47 @@ class Media extends ActiveRecord
 			$media->save();
 		}
 
-		if($media->id !== null && strpos($media->mimetype, 'image') !== false) {
-			$this->createThumbImages($media);
+		if($media->id !== null && (strpos($media->mimetype, 'image') !== false || strpos($media->mimetype, 'video') !== false) ) {
+			$this->createMediaThumbs($media);
 		}
 
 		return $media;
 	}
 
 	/**
-	 * Create Thumb Images files
+	 * Create Media Thumbs files
 	 *
 	 * @param Media $media
 	 *
 	 * @return mixed
-	 * @throws RuntimeException
+	 * @throws getid3_exception
 	 */
-	public function createThumbImages($media)
+	public function createMediaThumbs($media)
 	{
-		$imagePath  = Yii::getAlias(Yii::$app->getModule('media')->mediaPath);
+		$mediaPath  = Yii::getAlias(Yii::$app->getModule('media')->mediaPath);
 		$thumbsPath = Yii::getAlias(Yii::$app->getModule('media')->mediaThumbsPath);
 
-		$imageName = $media->filename;
-		$imageLink = $imagePath.$media->filename;
-		$imageOptions = Yii::$app->getModule('media')->mediaThumbsOptions;
+		$mediaName = $media->filename;
+		$mediaLink = $mediaPath.$media->filename;
+		$mediaOptions = Yii::$app->getModule('media')->mediaThumbsOptions;
 
 		// Save Image Thumbs
-		Image::thumbnail($imageLink, $imageOptions['small']['width'], $imageOptions['small']['height'])
-		     ->save( $thumbsPath . 'small/' . $imageName, [ 'quality' => $imageOptions['small']['quality']]);
-		Image::thumbnail($imageLink, $imageOptions['medium']['width'], $imageOptions['medium']['height'])
-		     ->save( $thumbsPath . 'medium/' . $imageName, [ 'quality' => $imageOptions['medium']['quality']]);
-		Image::thumbnail($imageLink, $imageOptions['large']['width'], $imageOptions['large']['height'])
-		     ->save( $thumbsPath . 'large/' . $imageName, [ 'quality' => $imageOptions['large']['quality']]);
-		Image::thumbnail($imageLink, $imageOptions['extra']['width'], $imageOptions['extra']['height'])
-		     ->save( $thumbsPath . 'extra/' . $imageName, [ 'quality' => $imageOptions['extra']['quality']]);
+		if(strpos($media->mimetype, 'image') !== false) {
+			Image::thumbnail($mediaLink, $mediaOptions['small']['width'], $mediaOptions['small']['height'])
+				->save( $thumbsPath . 'small/' . $mediaName, [ 'quality' => $mediaOptions['small']['quality']]);
+			Image::thumbnail($mediaLink, $mediaOptions['medium']['width'], $mediaOptions['medium']['height'])
+				->save( $thumbsPath . 'medium/' . $mediaName, [ 'quality' => $mediaOptions['medium']['quality']]);
+			Image::thumbnail($mediaLink, $mediaOptions['large']['width'], $mediaOptions['large']['height'])
+				->save( $thumbsPath . 'large/' . $mediaName, [ 'quality' => $mediaOptions['large']['quality']]);
+			Image::thumbnail($mediaLink, $mediaOptions['extra']['width'], $mediaOptions['extra']['height'])
+				->save( $thumbsPath . 'extra/' . $mediaName, [ 'quality' => $mediaOptions['extra']['quality']]);
+		}
+
+		// Save Video Thumbs
+		if(strpos($media->mimetype, 'video') !== false) {
+			$frame = $this->getVideoThumb($mediaLink,$sec = 3);
+			$frame->save($thumbsPath . 'video/' .$media->filename.'.jpg');
+		}
 
 		return true;
 	}
