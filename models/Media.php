@@ -452,7 +452,10 @@ class Media extends ActiveRecord
 		$html  = '<div class="col-md-2 col-sm-3 col-xs-6">';
 		$html .= '<div class="media-item">';
 		$html .= '<a href="#" class="thumbnail">';
-		$html .= '<img src="'.$media->getMediaThumbsUrl('small',true).'" alt="'.$attributes['title'].'" title="'.$attributes['title'].'">';
+		$html .= '<img src="'.$media->getMediaThumbsUrl('small').'" alt="'.$attributes['title'].'" title="'.$attributes['title'].'">';
+		if (strpos($media->mimetype, 'video') !== false) {
+			$html .= '<span style="color: #FFF; position:absolute; left: 47%; top: 30%;"><i class="fa fa-play" aria-hidden="true"></i></span>';
+		}
 		$html .= '</a></div></div>';
 
 		return $html;

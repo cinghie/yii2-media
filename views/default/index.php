@@ -11,6 +11,15 @@ use kartik\widgets\ActiveForm;
 
 $this->title = Yii::t('media', 'Media');
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = Yii::t('traits', 'Grid');
+
+// Register action buttons js
+$this->registerJs('$(document).ready(function() 
+    {'
+	.$searchModel->getUpdateButtonJavascript('#w0')
+	.$searchModel->getDeleteButtonJavascript('#w0').
+	'});
+');
 
 ?>
 
@@ -37,5 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <div class="clearfix"></div>
+
+<div class="separator"></div>
 
 <?= $model->getMediasGrid($dataProvider) ?>

@@ -10,6 +10,7 @@
 use kartik\grid\CheckboxColumn;
 use kartik\grid\GridView;
 use kartik\helpers\Html;
+use kartik\widgets\ActiveForm;
 use yii\helpers\Url;
 
 $this->title = Yii::t('media', 'Media');
@@ -30,7 +31,27 @@ $this->registerJs('$(document).ready(function()
 	'searchModel' => $searchModel
 ]) ?>
 
+<div class="row">
+
+    <div class="col-md-12">
+
+        <div class="collapse" id="collapseMedia">
+
+			<?php $form = ActiveForm::begin(['options' => ['enctype' =>'multipart/form-data']]) ?>
+
+			    <?= $searchModel->getMediasWidget() ?>
+
+			<?php ActiveForm::end() ?>
+
+        </div>
+
+    </div>
+
+</div>
+
 <div class="clearfix"></div>
+
+<div class="separator"></div>
 
 <div class="media-list">
 
@@ -61,7 +82,14 @@ $this->registerJs('$(document).ready(function()
 				'width' => '8%',
 				'value' => function ($model) {
 					/** @var $model cinghie\media\models\Media */
-					return Html::img($model->getMediaThumbsUrl(),['class' => 'img-responsive', 'width' => '78px']);
+					$html  = '<div class="text-center" style="display: block; position:relative;">';
+					$html .= Html::img($model->getMediaThumbsUrl(),['class' => 'img-responsive', 'width' => '78px']);
+					if (strpos($model->mimetype, 'video') !== false) {
+						$html .= '<span style="color: #FFF; position:absolute; left: 40%; top: 30%;"><i class="fa fa-play" aria-hidden="true"></i></span>';
+					}
+					$html .= '</div>';
+
+					return $html;
 				},
 			],
 			[
