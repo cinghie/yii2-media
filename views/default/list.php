@@ -61,7 +61,7 @@ $this->registerJs('$(document).ready(function()
 				'width' => '8%',
 				'value' => function ($model) {
 					/** @var $model cinghie\media\models\Media */
-					return Html::img($model->getMediaThumbsUrl(),[ 'width' => '78px']);
+					return Html::img($model->getMediaThumbsUrl(),['class' => 'img-responsive', 'width' => '78px']);
 				},
 			],
 			[
