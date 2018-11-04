@@ -439,7 +439,7 @@ class Media extends ActiveRecord
 	{
 		$attributes = $media->attributes;
 
-		$html  = '<div class="col-md-2 col-sm-3 col-xs-6">';
+		$html  = '<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">';
 		$html .= '<div class="media-item">';
 		$html .= '<a href="#" class="thumbnail" style="margin-bottom: 0; padding-bottom: 100%; position: relative; overflow: hidden; width: 100%;">';
 		$html .= '<img src="'.$media->getMediaThumbsUrl('small').'" alt="'.$attributes['title'].'" title="'.$attributes['title'].'" style="height:100%; left:0; position: absolute; top:0; width:100%;" />';
