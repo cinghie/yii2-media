@@ -486,10 +486,9 @@ class Media extends ActiveRecord
 				'showCaption' => true,
 				'showRemove' => true,
 				'showUpload' => true,
-				'initialPreview' => $this->items ? $this->getMediaUrl() : false,
-				'initialPreviewAsData' => $this->items ? true : false,
-				'initialPreviewConfig' => $this->isNewRecord ? [] : [ ['url' => Url::to(['deletemedia', 'id' => $this->id])] ],
-				'overwriteInitial' => $this->items ? true : false
+				'initialPreview' => false,
+				'initialPreviewAsData' => false,
+				'overwriteInitial' => false
 			]
 		]);
 	}
