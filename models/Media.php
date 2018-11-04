@@ -441,12 +441,21 @@ class Media extends ActiveRecord
 
 		$html  = '<div class="col-md-2 col-sm-3 col-xs-6">';
 		$html .= '<div class="media-item">';
-		$html .= '<a href="#" class="thumbnail">';
-		$html .= '<img src="'.$media->getMediaThumbsUrl('small').'" alt="'.$attributes['title'].'" title="'.$attributes['title'].'">';
+		$html .= '<a href="#" class="thumbnail" style="margin-bottom: 0; padding-bottom: 100%; position: relative; overflow: hidden; width: 100%;">';
+		$html .= '<img src="'.$media->getMediaThumbsUrl('small').'" alt="'.$attributes['title'].'" title="'.$attributes['title'].'" style="height:100%; left:0; position: absolute; top:0; width:100%;" />';
 		if (strpos($media->mimetype, 'video') !== false) {
-			$html .= '<span style="color: #FFF; position:absolute; left: 47%; top: 30%;"><i class="fa fa-play" aria-hidden="true"></i></span>';
+			$html .= '<span style="color: #FFF; position:absolute; left: 48%; top: 45%;"><i class="fa fa-play" aria-hidden="true"></i></span>';
 		}
-		$html .= '</a></div></div>';
+		$html .= '</a>';
+		$html .= '<div style="background: #f4f4f4; display: block; overflow: hidden; padding: 10px; text-overflow: ellipsis; white-space: nowrap;">
+					<a href="/yii2gogocms/frontend/web/attachments/sample.pdf" class="mailbox-attachment-name">
+						'.$media->originalname.'
+				    </a>
+				    <div style="color: #999; font-size: 12px;">'.$media->mimetype.'</div>
+				    <div style="color: #999; font-size: 12px;">'.$media->getFormattedSize().'</div>
+				  </div>';
+		$html .= '</div>';
+		$html .= '</div>';
 
 		return $html;
 	}
