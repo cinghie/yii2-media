@@ -18,7 +18,6 @@ use Throwable;
 use Yii;
 use cinghie\media\models\Media;
 use cinghie\media\models\MediaSearch;
-use yii\base\InvalidArgumentException;
 use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -51,7 +50,7 @@ class DefaultController extends \yii\web\Controller
 				'class' => VerbFilter::className(),
 				'actions' => [
 					'delete' => ['post'],
-					//'deletemultiple' => ['post'],
+					'deletemultiple' => ['post'],
 					'deleteonfly' => ['post'],
 				],
 			],
@@ -93,14 +92,28 @@ class DefaultController extends \yii\web\Controller
 	 * Display all Media models on List View
 	 *
 	 * @return string
-	 * @throws InvalidArgumentException
+	 * @throws Exception
 	 */
 	public function actionList()
 	{
+		$model = new Media();
+		$post  = Yii::$app->request->post();
+
 		$searchModel  = new MediaSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+		if ($model->load($post))
+		{
+			// Create UploadFile Instance
+			$model->items = UploadedFile::getInstances($model, 'items');
+
+			foreach ($model->items as $item) {
+				$model->uploadMedia($item);
+			}
+		}
+
 		return $this->render('list', [
+			'model' => $model,
 			'searchModel'  => $searchModel,
 			'dataProvider' => $dataProvider
 		]);

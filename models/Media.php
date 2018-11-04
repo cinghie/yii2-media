@@ -102,10 +102,7 @@ class Media extends ActiveRecord
 	{
 		/** @var Media $this */
 		$this->deleteFile();
-
-		if (strpos($this->mimetype, 'image') !== false) {
-			$this->deleteThumbs();
-		}
+		$this->deleteThumbs();
 
 		return parent::beforeDelete();
 	}
@@ -120,47 +117,39 @@ class Media extends ActiveRecord
 	{
 		$file = $this->mediaPath;
 
-		// check if image exists on server
-		if ( empty($this->filename) || !file_exists($file) ) {
-			return false;
+		if ( !empty($this->filename) && file_exists($file) ) {
+			unlink($file);
 		}
 
-		// check if uploaded file can be deleted on server
-		if (unlink($file)) {
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
 	public function deleteThumbs()
 	{
-		$thumbPath = Yii::getAlias( Yii::$app->getModule('media')->mediaThumbsPath  );
+		$thumbS  = $this->getMediaThumbsPath('small');
+		$thumbM  = $this->getMediaThumbsPath('medium');
+		$thumbL  = $this->getMediaThumbsPath('large');
+		$thumbXL = $this->getMediaThumbsPath('extra');
 
-		$thumbS  = $thumbPath . 'small/' . $this->filename;
-		$thumbM  = $thumbPath . 'medium/' . $this->filename;
-		$thumbL  = $thumbPath . 'large/' . $this->filename;
-		$thumbXL = $thumbPath . 'extra/' . $this->filename;
+		$thumbVideo = $this->getMediaThumbsPath('video') . '.jpg';
 
-		$thumbVideo = $thumbPath . 'video/' . $this->filename . '.jpg';
-
-		if ( !empty($this->filename) || file_exists($thumbS) ) {
+		if ( !empty($this->filename) && file_exists($thumbS) ) {
 			unlink($thumbS);
 		}
 
-		if ( !empty($this->filename) || file_exists($thumbM) ) {
+		if ( !empty($this->filename) && file_exists($thumbM) ) {
 			unlink($thumbM);
 		}
 
-		if ( !empty($this->filename) || file_exists($thumbL) ) {
+		if ( !empty($this->filename) && file_exists($thumbL) ) {
 			unlink($thumbL);
 		}
 
-		if ( !empty($this->filename) || file_exists($thumbXL) ) {
+		if ( !empty($this->filename) && file_exists($thumbXL) ) {
 			unlink($thumbXL);
 		}
 
-		if ( !empty($this->filename) || file_exists($thumbVideo) ) {
+		if ( !empty($this->filename) && file_exists($thumbVideo) ) {
 			unlink($thumbVideo);
 		}
 
@@ -180,11 +169,12 @@ class Media extends ActiveRecord
 	/**
 	 * Fetch stored thumbs filename with complete path
 	 *
+	 * @param string $size
+	 *
 	 * @return string
-	 * @throws InvalidParamException
 	 */
-	public function getMediaThumbsPath() {
-		return Yii::getAlias(Yii::$app->getModule('media')->mediaThumbsPath).$this->filename;
+	public function getMediaThumbsPath($size = 'small') {
+		return Yii::getAlias(Yii::$app->getModule('media')->mediaThumbsPath).'/'.$size.'/'.$this->filename;
 	}
 
 	/**
@@ -274,7 +264,7 @@ class Media extends ActiveRecord
 			$media->filename = $file->name;
 			$media->originalname = $originalName;
 			$media->reference = $reference;
-			$media->duration = $this->getVideoDuration($fileFullPath);
+			$media->duration = strpos($media->mimetype, 'video') !== false ? $this->getVideoDuration($fileFullPath) : null;
 			$media->extension = $mediaExt;
 			$media->mimetype = $file->type;
 			$media->created = date('Y-m-d H:i:s');
@@ -488,7 +478,7 @@ class Media extends ActiveRecord
 				'showUpload' => true,
 				'initialPreview' => false,
 				'initialPreviewAsData' => false,
-				'overwriteInitial' => false
+				'overwriteInitial' => true
 			]
 		]);
 	}
