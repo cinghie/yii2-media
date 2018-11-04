@@ -60,3 +60,13 @@ To disable media management on frontend, set on config:
 	
 ]	
 ```
+
+### 3. Install FFmpeg
+
+On Linux
+
+```
+apt-get install ffmpeg
+
+whereis ffmpeg
+```
