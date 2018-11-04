@@ -464,6 +464,7 @@ class Media extends ActiveRecord
 						'.$media->originalname.'
 				    </a>
 				    <div style="color: #999; font-size: 12px;">'.$media->mimetype.'</div>
+				    <div style="color: #999; font-size: 12px;">'.$media->reference.'</div>
 				    <div style="color: #999; font-size: 12px;">'.$media->getFormattedSize().'</div>
 				  </div>';
 		$html .= '</div>';
