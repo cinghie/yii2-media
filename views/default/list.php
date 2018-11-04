@@ -39,7 +39,7 @@ $this->registerJs('$(document).ready(function()
 
 			<?php $form = ActiveForm::begin(['options' => ['enctype' =>'multipart/form-data']]) ?>
 
-			    <?= $searchModel->getMediasWidget() ?>
+			    <?= $model->getMediasWidget() ?>
 
 			<?php ActiveForm::end() ?>
 
