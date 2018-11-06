@@ -18,8 +18,10 @@
         }
     ],
     "require": {
-        "yiisoft/yii2": "~2.0.12",
-        "cinghie/yii2-traits": "*"
+        "yiisoft/yii2": "^2.0.15",
+        "cinghie/yii2-masonry": "^1.0.0",
+        "cinghie/yii2-traits": "*",
+        "roave/security-advisories": "dev-master"
     },
     "autoload": {
         "psr-4": {
