@@ -5,7 +5,7 @@
  * @company Gogodigital Srls - Wide ICT Solutions
  * @website http://www.gogodigital.it
  * @github https://github.com/cinghie/yii2-user-extended
- * @license GNU GENERAL PUBLIC LICENSE VERSION 3
+ * @license BSD-3-Clause
  * @package yii2-user-extended
  * @version 0.6.1
  */
