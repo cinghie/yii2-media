@@ -5,7 +5,7 @@
  * @company Gogodigital Srls - Wide ICT Solutions
  * @website http://www.gogodigital.it
  * @github https://github.com/cinghie/yii2-media
- * @license GNU GENERAL PUBLIC LICENSE VERSION 3
+ * @license BSD-3-Clause
  * @package yii2-media
  * @version 0.1.0
  */
@@ -14,8 +14,8 @@ namespace cinghie\media\models;
 
 use Exception;
 use getid3_exception;
-use Imagine\Exception\RuntimeException;
 use Yii;
+use cinghie\tinify\Tinify;
 use cinghie\traits\AttachmentTrait;
 use cinghie\traits\CreatedTrait;
 use cinghie\traits\TitleAliasTrait;
@@ -279,6 +279,11 @@ class Media extends ActiveRecord
 			$media->created_by = Yii::$app->user->id;
 			$media->size  = $file->size;
 			$media->save();
+		}
+		
+		if(Yii::$app->getModule('media')->tinyPngAPIKey && strpos($media->mimetype, 'image') !== false) {
+			$tinify = new Tinify(['apiKey' => Yii::$app->getModule('media')->tinyPngAPIKey]);
+			$tinify->compress($fileFullPath);
 		}
 
 		if($media->id !== null && (strpos($media->mimetype, 'image') !== false || strpos($media->mimetype, 'video') !== false) ) {
