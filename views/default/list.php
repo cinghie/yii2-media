@@ -82,8 +82,13 @@ $this->registerJs('$(document).ready(function()
 				'width' => '8%',
 				'value' => function ($model) {
 					/** @var $model cinghie\media\models\Media */
-					$html  = '<div class="text-center" style="display: block; position:relative;">';
-					$html .= Html::img($model->getMediaThumbsUrl(),['class' => 'img-responsive', 'width' => '78px']);
+					if(strpos($model->mimetype, 'image') !== false || strpos($model->mimetype, 'video') !== false) {
+						$html  = '<div style="display: block; position:relative;">';
+						$html .= Html::img($model->getMediaThumbsUrl(),['class' => 'img-responsive text-center', 'style' => 'margin: 0 auto;', 'width' => '78px']);
+					} else {
+						$html  = '<div class="text-center" style="color: #3c8dbc;font-size: 52px;">';
+						$html .= $model->getAttachmentPreview('img-responsive','color: #3c8dbc;font-size: 72px;margin: 0 auto;');
+					}
 					if (strpos($model->mimetype, 'video') !== false) {
 						$html .= '<span style="color: #FFF; position:absolute; left: 40%; top: 30%;"><i class="fa fa-play" aria-hidden="true"></i></span>';
 					}

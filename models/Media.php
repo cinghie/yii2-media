@@ -286,7 +286,7 @@ class Media extends ActiveRecord
 			$tinify->compress($fileFullPath);
 		}
 
-		if($media->id !== null && (strpos($media->mimetype, 'image') !== false || strpos($media->mimetype, 'video') !== false) ) {
+		if($media->id !== null && (strpos($media->mimetype, 'image') !== false || strpos($media->mimetype, 'video') !== false)) {
 			$this->createMediaThumbs($media);
 		}
 
