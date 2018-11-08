@@ -20,6 +20,8 @@ use cinghie\traits\AttachmentTrait;
 use cinghie\traits\CreatedTrait;
 use cinghie\traits\TitleAliasTrait;
 use cinghie\traits\ViewsHelpersTrait;
+use kartik\grid\CheckboxColumn;
+use kartik\grid\GridView;
 use kartik\widgets\FileInput;
 use yii\base\InvalidParamException;
 use yii\db\ActiveRecord;
@@ -418,67 +420,6 @@ class Media extends ActiveRecord
 	}
 
 	/**
-	 * Generate Mediaw Grid View
-	 *
-	 * @param ActiveDataProvider $dataProvider
-	 *
-	 * @return string
-	 */
-	public function getMediasGrid($dataProvider)
-	{
-		$medias = $dataProvider->getModels();
-
-		$html = '';
-		$html .= '<div class="row">';
-
-		foreach ($medias as $media) {
-			$html .= $this->getMediaGrid($media);
-		}
-
-		$html .= '</div>';
-		$html .= '<div class="clearfix"></div>';
-
-		return $html;
-	}
-
-	/**
-	 * Generate Media Grid View
-	 *
-	 * @param Media $media
-	 *
-	 * @return string
-	 */
-	private function getMediaGrid($media)
-	{
-		if (strpos($media->mimetype, 'image') !== false || strpos($media->mimetype, 'video') !== false) {
-			$style = 'margin-bottom: 0; padding-bottom: 100% ; position: relative; overflow: hidden; width: 100%;';
-		} else {
-			$style = 'font-size: 100px; margin-bottom: 0; padding-bottom: calc(100% - 158px); padding-top: 20px; position: relative; overflow: hidden; text-align: center; width: 100%;';
-		}
-
-		$html  = '<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">';
-		$html .= '<div class="media-item">';
-		$html .= '<a href="#" class="thumbnail" style="'.$style.'">';
-		$html .= $media->getAttachmentPreview('img-responsive','height:100%; left:0; position: absolute; top:0; width:100%;');
-		if (strpos($media->mimetype, 'video') !== false) {
-			$html .= '<span style="color: #FFF; position:absolute; left: 48%; top: 45%;"><i class="fa fa-play" aria-hidden="true"></i></span>';
-		}
-		$html .= '</a>';
-		$html .= '<div style="background: #f4f4f4; display: block; overflow: hidden; padding: 10px; text-overflow: ellipsis; white-space: nowrap;">
-					<a href="/yii2gogocms/frontend/web/attachments/sample.pdf" class="mailbox-attachment-name">
-						'.$media->originalname.'
-				    </a>
-				    <div style="color: #999; font-size: 12px;">'.$media->mimetype.'</div>
-				    <div style="color: #999; font-size: 12px;">'.$media->reference.'</div>
-				    <div style="color: #999; font-size: 12px;">'.$media->getFormattedSize().'</div>
-				  </div>';
-		$html .= '</div>';
-		$html .= '</div>';
-
-		return $html;
-	}
-
-	/**
 	 * Generate Image Form Widget
 	 *
 	 * @return string
@@ -544,6 +485,176 @@ class Media extends ActiveRecord
 		]);
 
 		return $media;
+	}
+
+	/**
+	 * Generate Mediaw Grid View
+	 *
+	 * @param ActiveDataProvider $dataProvider
+	 *
+	 * @return string
+	 */
+	public function getMediasGrid($dataProvider)
+	{
+		$medias = $dataProvider->getModels();
+
+		$html = '';
+		$html .= '<div class="row">';
+
+		foreach ($medias as $media) {
+			$html .= $this->getMediaGrid($media);
+		}
+
+		$html .= '</div>';
+		$html .= '<div class="clearfix"></div>';
+
+		return $html;
+	}
+
+	/**
+	 * Generate Media Grid View
+	 *
+	 * @param Media $media
+	 *
+	 * @return string
+	 */
+	private function getMediaGrid($media)
+	{
+		if (strpos($media->mimetype, 'image') !== false || strpos($media->mimetype, 'video') !== false) {
+			$style = 'margin-bottom: 0; padding-bottom: 100% ; position: relative; overflow: hidden; width: 100%;';
+		} else {
+			$style = 'font-size: 100px; margin-bottom: 0; padding-bottom: calc(100% - 158px); padding-top: 20px; position: relative; overflow: hidden; text-align: center; width: 100%;';
+		}
+
+		$html  = '<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">';
+		$html .= '<div class="media-item">';
+		$html .= '<a href="#" class="thumbnail" style="'.$style.'">';
+		$html .= $media->getAttachmentPreview('img-responsive','height:100%; left:0; position: absolute; top:0; width:100%;');
+		if (strpos($media->mimetype, 'video') !== false) {
+			$html .= '<span style="color: #FFF; position:absolute; left: 48%; top: 45%;"><i class="fa fa-play" aria-hidden="true"></i></span>';
+		}
+		$html .= '</a>';
+		$html .= '<div style="background: #f4f4f4; display: block; overflow: hidden; padding: 10px; text-overflow: ellipsis; white-space: nowrap;">
+					<a href="/yii2gogocms/frontend/web/attachments/sample.pdf" class="mailbox-attachment-name">
+						'.$media->originalname.'
+				    </a>
+				    <div style="color: #999; font-size: 12px;">'.$media->mimetype.'</div>
+				    <div style="color: #999; font-size: 12px;">'.$media->reference.'</div>
+				    <div style="color: #999; font-size: 12px;">'.$media->getFormattedSize().'</div>
+				  </div>';
+		$html .= '</div>';
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	/**
+	 * @param $dataProvider
+	 * @param $searchModel
+	 *
+	 * @return mixed
+	 * @throws Exception
+	 */
+	public function getMediaList($dataProvider,$searchModel)
+	{
+		return GridView::widget([
+			'dataProvider'=> $dataProvider,
+			'filterModel' => $searchModel,
+			'containerOptions' => [
+				'class' => 'media-pjax-container'
+			],
+			'pjax' => true,
+			'pjaxSettings'=>[
+				'neverTimeout'=>true,
+			],
+			'columns' => [
+				[
+					'class' => CheckboxColumn::class
+				],
+				[
+					'attribute' => Yii::t('traits', 'Preview'),
+					'format' => 'raw',
+					'hAlign' => 'center',
+					'width' => '8%',
+					'value' => function ($model) {
+						/** @var $model self */
+						if(strpos($model->mimetype, 'image') !== false || strpos($model->mimetype, 'video') !== false) {
+							$html  = '<div style="display: block; position:relative;">';
+							$html .= Html::img($model->getMediaThumbsUrl(),['class' => 'img-responsive text-center', 'style' => 'margin: 0 auto;', 'width' => '78px']);
+						} else {
+							$html  = '<div class="text-center" style="color: #3c8dbc;font-size: 52px;">';
+							$html .= $model->getAttachmentPreview('img-responsive','color: #3c8dbc;font-size: 72px;margin: 0 auto;');
+						}
+						if (strpos($model->mimetype, 'video') !== false) {
+							$html .= '<span style="color: #FFF; position:absolute; left: 40%; top: 30%;"><i class="fa fa-play" aria-hidden="true"></i></span>';
+						}
+						$html .= '</div>';
+
+						return $html;
+					},
+				],
+				[
+					'attribute' => 'title',
+					'format' => 'html',
+					'hAlign' => 'center',
+					'value' => function ($model) {
+						/** @var $model self */
+						$url = urldecode(Url::toRoute(['/media/items/update', 'id' => $model->id ]));
+						return Html::a($model->title,$url).'<br>('.$model->filename.')';
+					}
+				],
+				[
+					'attribute' => 'reference',
+					'width' => '7%',
+					'hAlign' => 'center',
+				],
+				[
+					'attribute' => 'size',
+					'width' => '7%',
+					'hAlign' => 'center',
+					'value' => function ($model) {
+						/** @var $model self */
+						return $model->getFormattedSize();
+					}
+				],
+				[
+					'attribute' => 'duration',
+					'format' => 'html',
+					'width' => '6%',
+					'hAlign' => 'center',
+					'value' => function ($model) {
+						/** @var $model self */
+						return $model->duration ?? '<span class="fa fa-ban text-danger"></span>';
+					}
+				],
+				[
+					'attribute' => 'extension',
+					'width' => '7%',
+					'hAlign' => 'center',
+				],
+				/**[
+				'attribute' => 'mimetype',
+				'format' => 'html',
+				'hAlign' => 'center',
+				'width' => '7%',
+				'value' => function ($model) {
+				return $model->getAttachmentTypeIcon();
+				}
+				],**/
+				[
+					'attribute' => 'id',
+					'width' => '5%',
+					'hAlign' => 'center',
+				]
+			],
+			'responsive' => true,
+			'responsiveWrap' => true,
+			'hover' => true,
+			'panel' => [
+				'heading' => '<h3 class="panel-title"><i class="fa fa-cloud-upload"></i></h3>',
+				'type' => 'success',
+			]
+		]);
 	}
 
     /**
