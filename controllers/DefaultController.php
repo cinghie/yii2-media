@@ -38,7 +38,7 @@ class DefaultController extends \yii\web\Controller
 				'rules' => [
 					[
 						'allow' => true,
-						'actions' => ['index','list','delete','deletemultiple','deleteonfly'],
+						'actions' => ['index','list','tinify','delete','deletemultiple','deleteonfly'],
 						'roles' => $this->module->mediaRoles
 					],
 				],
@@ -117,6 +117,16 @@ class DefaultController extends \yii\web\Controller
 			'searchModel'  => $searchModel,
 			'dataProvider' => $dataProvider
 		]);
+	}
+
+	/**
+	 * Display Tinify interface
+	 *
+	 * @return string
+	 */
+	public function actionTinify()
+	{
+		return $this->render('tinify');
 	}
 
 	/**
