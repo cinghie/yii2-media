@@ -497,16 +497,22 @@ class Media extends ActiveRecord
 	public function getMediasGrid($dataProvider)
 	{
 		$medias = $dataProvider->getModels();
+		$html   = '';
 
-		$html = '';
-		$html .= '<div class="row">';
+		$arrayChunks = array_chunk($medias, 6);
 
-		foreach ($medias as $media) {
-			$html .= $this->getMediaGrid($media);
+		foreach ($arrayChunks as $medias)
+		{
+			$html .= '<div class="row" style="margin-bottom:  25px;">';
+
+			foreach ($medias as $media) {
+				$html .= $this->getMediaGrid($media);
+			}
+
+			$html .= '</div>';
 		}
 
 		$html .= '</div>';
-		$html .= '<div class="clearfix"></div>';
 
 		return $html;
 	}
