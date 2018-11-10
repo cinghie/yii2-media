@@ -503,7 +503,7 @@ class Media extends ActiveRecord
 
 		foreach ($arrayChunks as $medias)
 		{
-			$html .= '<div class="row" style="margin-bottom:  25px;">';
+			$html .= '<div class="row" style="margin-bottom: 10px;">';
 
 			foreach ($medias as $media) {
 				$html .= $this->getMediaGrid($media);

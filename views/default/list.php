@@ -25,9 +25,23 @@ $this->registerJs('$(document).ready(function()
 
 ?>
 
-<?= Yii::$app->view->renderFile('@vendor/cinghie/yii2-media/views/default/_navbar.php', [
-	'searchModel' => $searchModel
-]) ?>
+<div class="row">
+
+    <div class="col-md-6">
+
+		<?= Yii::$app->view->renderFile('@vendor/cinghie/yii2-media/views/default/_menu.php') ?>
+
+    </div>
+
+    <div class="col-md-6">
+
+		<?= Yii::$app->view->renderFile('@vendor/cinghie/yii2-media/views/default/_navbar.php', [
+			'searchModel' => $searchModel
+		]) ?>
+
+    </div>
+
+</div>
 
 <div class="row">
 
