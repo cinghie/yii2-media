@@ -16,11 +16,16 @@ use Yii;
 use cinghie\traits\CacheTrait;
 use cinghie\traits\ViewsHelpersTrait;
 use yii\base\InvalidConfigException;
+use yii\base\Model;
 use yii\web\HttpException;
 
-class MediaSettings
+class MediaSettings extends Model
 {
 	use CacheTrait, ViewsHelpersTrait;
+
+	public $tinifyActive;
+	public $tinifyAutomatic;
+	public $tinifyCode;
 
 	/**
 	 * @inheritdoc
@@ -28,7 +33,7 @@ class MediaSettings
 	public function rules()
 	{
 		return [
-			[['tinifyActive'], 'integer'],
+			[['tinifyActive','tinifyAutomatic'], 'integer'],
 			[['tinifyCode'], 'string'],
 		];
 	}
@@ -40,6 +45,7 @@ class MediaSettings
 	{
 		return [
 			'tinifyActive' => Yii::t('media', 'Active Tinify'),
+			'tinifyAutomatic' => Yii::t('media', 'Automatic Tinify'),
 			'tinifyCode' => Yii::t('media', 'Tinify Code'),
 		];
 	}
@@ -49,7 +55,7 @@ class MediaSettings
 	 */
 	public function fields()
 	{
-		return ['tinifyActive', 'tinifyCode'];
+		return ['tinifyActive', 'tinifyAutomatic', 'tinifyCode'];
 	}
 
 	/**
@@ -57,7 +63,7 @@ class MediaSettings
 	 */
 	public function attributes()
 	{
-		return ['tinifyActive', 'tinifyCode'];
+		return ['tinifyActive', 'tinifyAutomatic', 'tinifyCode'];
 	}
 
 	/**

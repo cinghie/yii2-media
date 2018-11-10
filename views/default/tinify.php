@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @var $form kartik\widgets\ActiveForm
+ * @var $model cinghie\media\models\MediaSettings
+ * @var $this yii\web\View
+ */
+
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
 use kartik\widgets\SwitchInput;
@@ -23,18 +29,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="col-md-6">
 
+	        <?= $model->getCancelButton() ?>
 
+	        <?= $model->getSaveButton() ?>
 
         </div>
 
     </div>
 
+    <div class="separator"></div>
+
     <div class="row">
 
         <div class="col-md-12">
+
             <div class="box box-solid">
+
                 <!-- /.box-header -->
                 <div class="box-body">
+
                     <div class="col-md-3">
                         <?= Html::img('https://tinypng.com/images/panda-chewing-2x.png', [
                             'class' => 'img-responsive',
@@ -42,10 +55,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             'width' => '70%'
                         ]) ?>
                     </div>
-                    <div class="col-md-4">
+
+                    <div class="col-md-6">
 
                     </div>
-                    <div class="col-md-5">
+
+                    <div class="col-md-3">
+
 	                    <?= $form->field($model, 'tinifyActive')->widget(SwitchInput::class, [
 		                    'indeterminateValue' => '0',
 		                    'pluginOptions' => [
@@ -53,11 +69,31 @@ $this->params['breadcrumbs'][] = $this->title;
 			                    'offColor' => 'danger'
 		                    ]
 	                    ]) ?>
+
+	                    <?= $form->field($model, 'tinifyAutomatic')->widget(SwitchInput::class, [
+		                    'indeterminateValue' => '0',
+		                    'pluginOptions' => [
+			                    'onColor' => 'success',
+			                    'offColor' => 'danger'
+		                    ]
+	                    ]) ?>
+
+	                    <?= $form->field($model, 'tinifyCode', [
+		                    'addon' => [
+			                    'prepend' => [
+				                    'content'=>'<i class="fa fa-key"></i>'
+			                    ]
+		                    ],
+	                    ])->textInput() ?>
+
                     </div>
+
                 </div>
                 <!-- /.box-body -->
+
             </div>
             <!-- /.box -->
+
         </div>
 
     </div>
