@@ -512,8 +512,6 @@ class Media extends ActiveRecord
 			$html .= '</div>';
 		}
 
-		$html .= '</div>';
-
 		return $html;
 	}
 

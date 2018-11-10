@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] = Yii::t('traits', 'Grid');
 // Register action buttons js
 $this->registerJs('$(document).ready(function() 
     {'
-	.$searchModel->getUpdateButtonJavascript('#w1')
-	.$searchModel->getDeleteButtonJavascript('#w1').
+	.$searchModel->getUpdateButtonJavascript('#w2')
+	.$searchModel->getDeleteButtonJavascript('#w2').
 	'});
 ');
 

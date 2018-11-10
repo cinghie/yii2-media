@@ -18,6 +18,8 @@ use Throwable;
 use Yii;
 use cinghie\media\models\Media;
 use cinghie\media\models\MediaSearch;
+use cinghie\media\models\MediaSettings;
+use pheme\settings\SettingsAction;
 use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -53,6 +55,20 @@ class DefaultController extends \yii\web\Controller
 					'deletemultiple' => ['post'],
 					'deleteonfly' => ['post'],
 				],
+			],
+		];
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function actions()
+	{
+		return [
+			'tinify' => [
+				'class' => SettingsAction::class,
+				'modelClass' => MediaSettings::class,
+				'viewName' => 'tinify'
 			],
 		];
 	}
@@ -117,16 +133,6 @@ class DefaultController extends \yii\web\Controller
 			'searchModel'  => $searchModel,
 			'dataProvider' => $dataProvider
 		]);
-	}
-
-	/**
-	 * Display Tinify interface
-	 *
-	 * @return string
-	 */
-	public function actionTinify()
-	{
-		return $this->render('tinify');
 	}
 
 	/**
