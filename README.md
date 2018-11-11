@@ -39,7 +39,13 @@ Set on your configuration file:
 	// Yii2 Media
 	'media' => [
 		'class' => 'cinghie\media\Media',
-		'mediaRoles' => ['admin'],
+		'mediaPath' => '@frontend/web/media/',  
+		'mediaThumbsPath' => '@frontend/web/media/thumbs/',  
+		'mediaURL' => $params['media']['mediaURL'],  
+		'mediaThumbsURL' => $params['media']['mediaThumbsURL'],  
+		'tinyPngAPIKey' => 'YOUR_TINIFY_API_KEY',
+		'mediaRoles' => ['admin'],  
+		'showTitles' => false
 	],
 	
 ]	
