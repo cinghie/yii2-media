@@ -22,12 +22,17 @@ class m151021_200536_create_media_settings extends Migration
 	    $datetime = date('Y-m-d H:i:s');
 
 	    $this->insert('{{%settings}}', [
-		    'key' => 'tinifyActive', 'value' => 0, 'section' => 'media', 'type' => 'integer',
+		    'key' => 'tinifyActive', 'value' => 0, 'section' => 'MediaSettings', 'type' => 'integer',
 		    'active' => 1, 'created' => $datetime, 'modified' => $datetime,
 	    ]);
 
 	    $this->insert('{{%settings}}', [
-		    'key' => 'tinifyCode', 'value' => '', 'section' => 'media', 'type' => 'string',
+		    'key' => 'tinifyAutomatic', 'value' => 0, 'section' => 'MediaSettings', 'type' => 'integer',
+		    'active' => 1, 'created' => $datetime, 'modified' => $datetime,
+	    ]);
+
+	    $this->insert('{{%settings}}', [
+		    'key' => 'tinifyCode', 'value' => '', 'section' => 'MediaSettings', 'type' => 'string',
 		    'active' => 1, 'created' => $datetime, 'modified' => $datetime,
 	    ]);
     }
@@ -38,6 +43,7 @@ class m151021_200536_create_media_settings extends Migration
     public function down()
     {
 	    $this->delete('{{%settings}}', ['key' => 'tinifyActive']);
+	    $this->delete('{{%settings}}', ['key' => 'tinifyAutomatic']);
 	    $this->delete('{{%settings}}', ['key' => 'tinifyCode']);
     }
 }
