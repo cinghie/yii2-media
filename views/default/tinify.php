@@ -40,54 +40,82 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
 
-        <div class="col-md-12">
+        <div class="col-md-8">
 
             <div class="box box-solid">
 
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+			            <?= Yii::t('media','Tinify Informations') ?>
+                    </h3>
+                </div>
                 <!-- /.box-header -->
+
                 <div class="box-body">
 
-                    <div class="col-md-3">
+                    <div class="col-md-4">
 
                         <?= Html::img('https://tinypng.com/images/panda-chewing-2x.png', [
                             'class' => 'img-responsive',
-                            'alt' => 'My logo',
-                            'width' => '70%'
+                            'alt' => 'My logo'
                         ]) ?>
 
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <h3 class="text-center">
+                            <?= $model->getTinify()->compressCount().' / 500' ?>
+                        </h3>
+                    </div>
+
+                    <div class="col-md-4">
 
                     </div>
 
-                    <div class="col-md-3">
+                </div>
+                <!-- /.box-body -->
 
-	                    <?= $form->field($model, 'tinifyActive')->widget(SwitchInput::class, [
-		                    'indeterminateValue' => '0',
-		                    'pluginOptions' => [
-			                    'onColor' => 'success',
-			                    'offColor' => 'danger'
-		                    ]
-	                    ]) ?>
+            </div>
+            <!-- /.box -->
 
-	                    <?= $form->field($model, 'tinifyAutomatic')->widget(SwitchInput::class, [
-		                    'indeterminateValue' => '0',
-		                    'pluginOptions' => [
-			                    'onColor' => 'success',
-			                    'offColor' => 'danger'
-		                    ]
-	                    ]) ?>
+        </div>
 
-	                    <?= $form->field($model, 'tinifyCode', [
-		                    'addon' => [
-			                    'prepend' => [
-				                    'content'=>'<i class="fa fa-key"></i>'
-			                    ]
-		                    ],
-	                    ])->textInput() ?>
+        <div class="col-md-4">
 
-                    </div>
+            <div class="box box-solid">
+
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+	                    <?= Yii::t('media','Tinify Settings') ?>
+                    </h3>
+                </div>
+                <!-- /.box-header -->
+
+                <div class="box-body">
+
+	                <?= $form->field($model, 'tinifyActive')->widget(SwitchInput::class, [
+		                'indeterminateValue' => '0',
+		                'pluginOptions' => [
+			                'onColor' => 'success',
+			                'offColor' => 'danger'
+		                ]
+	                ]) ?>
+
+	                <?= $form->field($model, 'tinifyAutomatic')->widget(SwitchInput::class, [
+		                'indeterminateValue' => '0',
+		                'pluginOptions' => [
+			                'onColor' => 'success',
+			                'offColor' => 'danger'
+		                ]
+	                ]) ?>
+
+	                <?= $form->field($model, 'tinifyCode', [
+		                'addon' => [
+			                'prepend' => [
+				                'content'=>'<i class="fa fa-key"></i>'
+			                ]
+		                ],
+	                ])->textInput() ?>
 
                 </div>
                 <!-- /.box-body -->

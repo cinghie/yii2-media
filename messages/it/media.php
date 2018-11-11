@@ -7,5 +7,7 @@ return [
 	'Media' => 'Media',
 	'Media has been deleted!' => 'Il Media è stato cancellato correttamente!',
 	'Tinify' => 'Tinify',
-	'Tinify Code' => 'Tinify API Key'
+	'Tinify Code' => 'Tinify API Key',
+	'Tinify Informations' => 'Informazioni Tinify',
+	'Tinify Settings' => 'Impostazioni Tinify'
 ];

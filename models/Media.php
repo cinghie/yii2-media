@@ -233,6 +233,30 @@ class Media extends ActiveRecord
 	}
 
 	/**
+	 * @return Tinify
+	 */
+	public function getTinify()
+	{
+		return new Tinify(['apiKey' => $this->getTinifyCode()]);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTinifyCode()
+	{
+		if(Yii::$app->settings !== null && Yii::$app->settings->get('MediaSettings.tinifyCode')) {
+			return Yii::$app->settings->get('MediaSettings.tinifyCode');
+		}
+
+		if(Yii::$app->getModule('media')->tinyPngAPIKey !== null && Yii::$app->getModule('media')->tinyPngAPIKey) {
+			return Yii::$app->getModule('media')->tinyPngAPIKey;
+		}
+
+		return '';
+	}
+
+	/**
 	 * Upload file to folder
 	 *
 	 * @param UploadedFile $file

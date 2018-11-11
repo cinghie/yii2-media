@@ -16,10 +16,9 @@ use Yii;
 use cinghie\traits\CacheTrait;
 use cinghie\traits\ViewsHelpersTrait;
 use yii\base\InvalidConfigException;
-use yii\base\Model;
 use yii\web\HttpException;
 
-class MediaSettings extends Model
+class MediaSettings extends Media
 {
 	use CacheTrait, ViewsHelpersTrait;
 
