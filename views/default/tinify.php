@@ -7,7 +7,6 @@
  */
 
 use kartik\widgets\ActiveForm;
-use kartik\widgets\Select2;
 use kartik\widgets\SwitchInput;
 use yii\helpers\Html;
 
@@ -49,11 +48,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="box-body">
 
                     <div class="col-md-3">
+
                         <?= Html::img('https://tinypng.com/images/panda-chewing-2x.png', [
                             'class' => 'img-responsive',
                             'alt' => 'My logo',
                             'width' => '70%'
                         ]) ?>
+
                     </div>
 
                     <div class="col-md-6">
