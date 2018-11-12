@@ -57,18 +57,29 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         <?= Html::img('https://tinypng.com/images/panda-chewing-2x.png', [
                             'class' => 'img-responsive',
-                            'alt' => 'My logo'
+                            'alt' => 'My logo',
+                            'wwidth' => '85%'
                         ]) ?>
 
                     </div>
 
-                    <div class="col-md-4">
-                        <h3 class="text-center">
-                            <?= $model->getTinify()->compressCount().' / 500' ?>
-                        </h3>
-                    </div>
+                    <div class="col-md-8">
 
-                    <div class="col-md-4">
+                        <h2 class="text-center">
+                            <?= $model->getTinify()->compressCount().' / 500<br>' ?>
+                        </h2>
+                        <h4 class="text-center">
+                            <?= Yii::t('media','Images tinified this month') ?>
+                        </h4>
+
+                        <hr>
+
+                        <h2 class="text-center">
+                            14,3 MB (16%)
+                        </h2>
+                        <h4 class="text-center">
+		                    <?= Yii::t('media','Total Savings') ?>
+                        </h4>
 
                     </div>
 
@@ -116,6 +127,12 @@ $this->params['breadcrumbs'][] = $this->title;
 			                ]
 		                ],
 	                ])->textInput() ?>
+
+                    <div style="padding: 6px 0">
+                        <a href="https://tinypng.com/developers" class="btn btn-primary" role="button" target="_blank">
+		                    <?= Yii::t('media','Get your API Key') ?>
+                        </a>
+                    </div>
 
                 </div>
                 <!-- /.box-body -->
