@@ -563,7 +563,7 @@ class Media extends ActiveRecord
 		}
 		$html .= '</a>';
 		$html .= '<div style="background: #f4f4f4; display: block; overflow: hidden; padding: 10px; text-overflow: ellipsis; white-space: nowrap;">
-					<a href="" class="mailbox-attachment-name">
+					<a href="'.$media->getFileUrl().'" class="mailbox-attachment-name">
 						'.$media->originalname.'
 				    </a>
 				    <div style="color: #999; font-size: 12px;">'.$media->mimetype.'</div>
@@ -627,7 +627,7 @@ class Media extends ActiveRecord
 					'hAlign' => 'center',
 					'value' => function ($model) {
 						/** @var $model self */
-						$url = urldecode(Url::toRoute(['/media/items/update', 'id' => $model->id ]));
+						$url = $model->getMediaUrl();
 						return Html::a($model->title,$url).'<br>('.$model->filename.')';
 					}
 				],
