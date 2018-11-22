@@ -2,21 +2,24 @@
 
 use yii\bootstrap\Nav;
 
-?>
+$items = [
+	[
+		'label'   => Yii::t('media', 'Media'),
+		'url'     => ['/media/default/index'],
+	]
+];
 
-<?= Nav::widget([
+if(Yii::$app->getModule('media')->showTinify) {
+	$items[] = [
+		'label'   => Yii::t('media', 'Tinify'),
+		'url'     => ['/media/default/tinify'],
+	];
+}
+
+Nav::widget([
 	'options' => [
 		'class' => 'nav-tabs',
 		'style' => 'margin-bottom: 15px',
 	],
-	'items' => [
-		[
-			'label'   => Yii::t('media', 'Media'),
-			'url'     => ['/media/default/index'],
-		],
-		[
-			'label'   => Yii::t('media', 'Tinify'),
-			'url'     => ['/media/default/tinify'],
-		],
-	],
-]) ?>
+	'items' => $items
+]);

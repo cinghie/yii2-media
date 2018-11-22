@@ -60,6 +60,9 @@ class Media extends Module
 	// Tiny PNG APi Key
 	public $tinyPngAPIKey = '';
 
+	// Show Tiny PNG Interface
+	public $showTinify = true;
+
 	// Show Titles in the views
 	public $showTitles = true;
 
