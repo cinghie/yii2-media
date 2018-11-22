@@ -225,6 +225,14 @@ class Media extends ActiveRecord
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getFileUrl()
+	{
+		return $this->getMediaUrl();
+	}
+
+	/**
 	 * @return Tinify
 	 */
 	public function getTinify()
