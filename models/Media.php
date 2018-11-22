@@ -556,14 +556,14 @@ class Media extends ActiveRecord
 
 		$html  = '<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">';
 		$html .= '<div class="media-item">';
-		$html .= '<a href="'.$media->getFileUrl().'" class="thumbnail" style="'.$style.'">';
+		$html .= '<a href="'.$model->getMediaUrl().'" class="thumbnail" style="'.$style.'">';
 		$html .= $media->getAttachmentPreview('img-responsive','height:100%; left:0; position: absolute; top:0; width:100%;');
 		if (strpos($media->mimetype, 'video') !== false) {
 			$html .= '<span style="color: #FFF; position:absolute; left: 48%; top: 45%;"><i class="fa fa-play" aria-hidden="true"></i></span>';
 		}
 		$html .= '</a>';
 		$html .= '<div style="background: #f4f4f4; display: block; overflow: hidden; padding: 10px; text-overflow: ellipsis; white-space: nowrap;">
-					<a href="'.$media->getFileUrl().'" class="mailbox-attachment-name">
+					<a href="'.$model->getMediaUrl().'" class="mailbox-attachment-name">
 						'.$media->originalname.'
 				    </a>
 				    <div style="color: #999; font-size: 12px;">'.$media->mimetype.'</div>
