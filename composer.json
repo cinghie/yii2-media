@@ -18,10 +18,10 @@
         }
     ],
     "require": {
-        "yiisoft/yii2": "^2.0.15",
-        "cinghie/yii2-masonry": "^1.0.0",
-        "cinghie/yii2-tinify": "^1.0.0",
-        "cinghie/yii2-traits": "*",
+        "yiisoft/yii2": "^2.0.14",
+        "cinghie/yii2-masonry": "@dev",
+        "cinghie/yii2-tinify": "@dev",
+        "cinghie/yii2-traits": "@dev",
         "roave/security-advisories": "dev-master"
     },
     "autoload": {
