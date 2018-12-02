@@ -16,7 +16,7 @@ if(Yii::$app->getModule('media')->showTinify) {
 	];
 }
 
-Nav::widget([
+echo Nav::widget([
 	'options' => [
 		'class' => 'nav-tabs',
 		'style' => 'margin-bottom: 15px',

@@ -75,6 +75,7 @@ class Media extends Module
 		$this->createMediaThumbsDirectory();
 		$this->copyDefaultImage();
 		$this->registerTranslations();
+
 		parent::init();
 	}
 
@@ -139,4 +140,5 @@ class Media extends Module
 			copy($sourceImage, $defaultImage);
 		}
 	}
+
 }

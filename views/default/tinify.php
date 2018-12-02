@@ -104,21 +104,33 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <div class="box-body">
 
-	                <?= $form->field($model, 'tinifyActive')->widget(SwitchInput::class, [
-		                'indeterminateValue' => '0',
-		                'pluginOptions' => [
-			                'onColor' => 'success',
-			                'offColor' => 'danger'
-		                ]
-	                ]) ?>
+                    <div class="row">
 
-	                <?= $form->field($model, 'tinifyAutomatic')->widget(SwitchInput::class, [
-		                'indeterminateValue' => '0',
-		                'pluginOptions' => [
-			                'onColor' => 'success',
-			                'offColor' => 'danger'
-		                ]
-	                ]) ?>
+                        <div class="col-md-6">
+
+	                        <?= $form->field($model, 'tinifyActive')->widget(SwitchInput::class, [
+		                        'indeterminateValue' => '0',
+		                        'pluginOptions' => [
+			                        'onColor' => 'success',
+			                        'offColor' => 'danger'
+		                        ]
+	                        ]) ?>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+	                        <?= $form->field($model, 'tinifyAutomatic')->widget(SwitchInput::class, [
+		                        'indeterminateValue' => '0',
+		                        'pluginOptions' => [
+			                        'onColor' => 'success',
+			                        'offColor' => 'danger'
+		                        ]
+	                        ]) ?>
+
+                        </div>
+
+                    </div>
 
 	                <?= $form->field($model, 'tinifyCode', [
 		                'addon' => [
@@ -128,7 +140,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		                ],
 	                ])->textInput() ?>
 
-                    <div style="padding: 6px 0">
+                    <div>
                         <a href="https://tinypng.com/developers" class="btn btn-primary" role="button" target="_blank">
 		                    <?= Yii::t('media','Get your API Key') ?>
                         </a>
