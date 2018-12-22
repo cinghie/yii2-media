@@ -26,6 +26,7 @@ use kartik\widgets\FileInput;
 use yii\base\InvalidParamException;
 use yii\db\ActiveRecord;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\imagine\Image;
@@ -633,7 +634,14 @@ class Media extends ActiveRecord
 				],
 				[
 					'attribute' => 'reference',
-					'width' => '7%',
+					'filterType' => GridView::FILTER_SELECT2,
+					'filter' => ArrayHelper::map(self::find()->distinct()->all(), 'reference', 'reference'),
+					'filterWidgetOptions' => [
+						'pluginOptions' => ['allowClear' => true],
+					],
+					'filterInputOptions' => ['placeholder' => ''],
+					'format' => 'raw',
+					'width' => '10%',
 					'hAlign' => 'center',
 				],
 				[
@@ -657,6 +665,13 @@ class Media extends ActiveRecord
 				],
 				[
 					'attribute' => 'extension',
+					'filterType' => GridView::FILTER_SELECT2,
+					'filter' => ArrayHelper::map(self::find()->distinct()->all(), 'extension', 'extension'),
+					'filterWidgetOptions' => [
+						'pluginOptions' => ['allowClear' => true],
+					],
+					'filterInputOptions' => ['placeholder' => ''],
+					'format' => 'raw',
 					'width' => '7%',
 					'hAlign' => 'center',
 				],
