@@ -91,6 +91,17 @@ class Media extends Module
 				'basePath' => __DIR__ . '/messages',
 			];
 		}
+
+		if (!isset(Yii::$app->i18n->translations['extensions/yii2-settings/*']))
+		{
+			Yii::$app->i18n->translations['extensions/yii2-settings/*'] = [
+				'class' => PhpMessageSource::class,
+				'basePath' => '@vendor/pheme/yii2-settings/messages',
+				'fileMap' => [
+					'extensions/yii2-settings/settings' => 'settings.php',
+				],
+			];
+		}
 	}
 
 	/**
