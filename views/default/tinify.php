@@ -7,8 +7,6 @@
  */
 
 use kartik\widgets\ActiveForm;
-use kartik\widgets\SwitchInput;
-use yii\helpers\Html;
 
 $this->title = Yii::t('media', 'Tinify');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('media', 'Media'), 'url' => ['/media/default/index']];
@@ -38,122 +36,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="separator"></div>
 
-    <div class="row">
+    <?php if( file_exists(Yii::getAlias('@vendor/cinghie/yii2-admin-lte/AdminLTEAsset.php')) || file_exists(Yii::getAlias('@vendor/cinghie/yii2-admin-lte/AdminLTEMinifyAsset.php')) ): ?>
 
-        <div class="col-md-8">
+	    <?= $this->render('_tinify_adminlte', [
+	        'form' => $form,
+	        'model' => $model
+        ]) ?>
 
-            <div class="box box-solid">
+    <?php else: ?>
 
-                <div class="box-header with-border">
-                    <h3 class="box-title">
-			            <?= Yii::t('media','Tinify Informations') ?>
-                    </h3>
-                </div>
-                <!-- /.box-header -->
+	    <?= $this->render('_tinify_classic', [
+		    'form' => $form,
+		    'model' => $model
+	    ]) ?>
 
-                <div class="box-body">
-
-                    <div class="col-md-4">
-
-                        <?= Html::img('https://tinypng.com/images/panda-chewing-2x.png', [
-                            'class' => 'img-responsive',
-                            'alt' => 'My logo',
-                            'wwidth' => '85%'
-                        ]) ?>
-
-                    </div>
-
-                    <div class="col-md-8">
-
-                        <h2 class="text-center">
-                            <?= $model->getTinify()->compressCount().' / 500<br>' ?>
-                        </h2>
-                        <h4 class="text-center">
-                            <?= Yii::t('media','Images tinified this month') ?>
-                        </h4>
-
-                        <hr>
-
-                        <h2 class="text-center">
-                            14,3 MB (16%)
-                        </h2>
-                        <h4 class="text-center">
-		                    <?= Yii::t('media','Total Savings') ?>
-                        </h4>
-
-                    </div>
-
-                </div>
-                <!-- /.box-body -->
-
-            </div>
-            <!-- /.box -->
-
-        </div>
-
-        <div class="col-md-4">
-
-            <div class="box box-solid">
-
-                <div class="box-header with-border">
-                    <h3 class="box-title">
-	                    <?= Yii::t('media','Tinify Settings') ?>
-                    </h3>
-                </div>
-                <!-- /.box-header -->
-
-                <div class="box-body">
-
-                    <div class="row">
-
-                        <div class="col-md-6">
-
-	                        <?= $form->field($model, 'tinifyActive')->widget(SwitchInput::class, [
-		                        'indeterminateValue' => '0',
-		                        'pluginOptions' => [
-			                        'onColor' => 'success',
-			                        'offColor' => 'danger'
-		                        ]
-	                        ]) ?>
-
-                        </div>
-
-                        <div class="col-md-6">
-
-	                        <?= $form->field($model, 'tinifyAutomatic')->widget(SwitchInput::class, [
-		                        'indeterminateValue' => '0',
-		                        'pluginOptions' => [
-			                        'onColor' => 'success',
-			                        'offColor' => 'danger'
-		                        ]
-	                        ]) ?>
-
-                        </div>
-
-                    </div>
-
-	                <?= $form->field($model, 'tinifyCode', [
-		                'addon' => [
-			                'prepend' => [
-				                'content'=>'<i class="fa fa-key"></i>'
-			                ]
-		                ],
-	                ])->textInput() ?>
-
-                    <div>
-                        <a href="https://tinypng.com/developers" class="btn btn-primary" role="button" target="_blank">
-		                    <?= Yii::t('media','Get your API Key') ?>
-                        </a>
-                    </div>
-
-                </div>
-                <!-- /.box-body -->
-
-            </div>
-            <!-- /.box -->
-
-        </div>
-
-    </div>
+    <?php endif ?>
 
 <?php ActiveForm::end() ?>
