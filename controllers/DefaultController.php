@@ -40,7 +40,7 @@ class DefaultController extends \yii\web\Controller
 				'rules' => [
 					[
 						'allow' => true,
-						'actions' => ['index','list','tinify','delete','deletemultiple','deleteonfly'],
+						'actions' => ['index','view','list','tinify','delete','deletemultiple','deleteonfly'],
 						'roles' => $this->module->mediaRoles
 					],
 				],
@@ -71,6 +71,24 @@ class DefaultController extends \yii\web\Controller
 				'viewName' => 'tinify'
 			],
 		];
+	}
+
+	/**
+	 * Displays a single Media Modal
+	 *
+	 * @param integer $id
+	 *
+	 * @return mixed
+	 * @throws InvalidParamException
+	 * @throws NotFoundHttpException
+	 */
+	public function actionView($id)
+	{
+		$model = $this->findModel($id);
+
+		return $this->renderAjax('view', [
+			'model' => $model,
+		]);
 	}
 
 	/**
