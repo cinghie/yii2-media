@@ -14,7 +14,6 @@ use cinghie\traits\migrations\Migration;
 
 class m151021_200526_create_media_table extends Migration
 {
-
 	/**
 	 * @inheritdoc
 	 */
@@ -45,5 +44,4 @@ class m151021_200526_create_media_table extends Migration
     {
         $this->dropTable('{{%media}}');
     }
-
 }

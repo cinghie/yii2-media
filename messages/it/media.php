@@ -8,6 +8,7 @@ return [
 	'Images tinified this month' => 'Immagini ottimizzate questo mese',
 	'Media' => 'Media',
 	'Media has been deleted!' => 'Il Media è stato cancellato correttamente!',
+	'Media Manager' => 'Media Manager',
 	'Tinify' => 'Tinify',
 	'Tinify Code' => 'Tinify API Key',
 	'Tinify Informations' => 'Informazioni Tinify',

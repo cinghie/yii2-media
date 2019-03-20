@@ -565,7 +565,7 @@ class Media extends ActiveRecord
 
 		$html  = '<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">';
 		$html .= '<div class="media-item">';
-		$html .= '<a id="modalButton" href="'.Url::to(['view','id' => $media->id]).'" class="thumbnail" style="'.$style.'">';
+		$html .= '<a class="thumbnail modalButton" href="'.Url::to(['view','id' => $media->id]).'" style="'.$style.'">';
 		$html .= $media->getAttachmentPreview('img-responsive','height:100%; left:0; position: absolute; top:0; width:100%;');
 		if (strpos($media->mimetype, 'video') !== false) {
 			$html .= '<span style="color: #FFF; position:absolute; left: 48%; top: 45%;"><i class="fa fa-play" aria-hidden="true"></i></span>';
@@ -683,15 +683,6 @@ class Media extends ActiveRecord
 					'width' => '7%',
 					'hAlign' => 'center',
 				],
-				/**[
-				'attribute' => 'mimetype',
-				'format' => 'html',
-				'hAlign' => 'center',
-				'width' => '7%',
-				'value' => function ($model) {
-				return $model->getAttachmentTypeIcon();
-				}
-				],**/
 				[
 					'attribute' => 'id',
 					'width' => '5%',

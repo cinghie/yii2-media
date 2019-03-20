@@ -8,6 +8,7 @@
  */
 
 use kartik\widgets\ActiveForm;
+use yii\bootstrap\Modal;
 
 $this->title = Yii::t('media', 'Media');
 $this->params['breadcrumbs'][] = $this->title;
@@ -20,6 +21,17 @@ $this->registerJs('$(document).ready(function()
 	.$searchModel->getDeleteButtonJavascript('#w2').
 	'});
 ');
+
+// Register Modal
+$this->registerJs("$(function(){
+    // changed id to class
+    $('.modalButton').click(function (){
+        $.get($(this).attr('href'), function(data) {
+          $('#modal').modal('show').find('#modalContent').html(data)
+       });
+       return false;
+    });
+}); ");
 
 ?>
 
@@ -64,3 +76,16 @@ $this->registerJs('$(document).ready(function()
 <div class="separator"></div>
 
 <?= $model->getMediasGrid($dataProvider) ?>
+
+<?php
+    Modal::begin([
+        'header' => Yii::t('media','Media Manager'),
+        'id' => 'modal',
+        'size' => 'xl',
+        'options' => []
+    ]);
+
+    echo '<div id="modalContent"></div>';
+
+    Modal::end();
+?>

@@ -62,6 +62,11 @@ To disable media management on frontend, set on config:
 	'media' => [
 		'class' => 'cinghie\media\Media',
 		'as frontend' => 'cinghie\media\filters\FrontendFilter',
+		'mediaNameType' => 'casual', // casual or original
+		'mediaPath' => '@webroot/media/',
+		'mediaThumbsPath' => '@webroot/media/thumbs/',
+		'mediaURL' => '@web/media/',
+		'mediaThumbsURL' => '@web/media/thumbs/'
 	],
 	
 ]	

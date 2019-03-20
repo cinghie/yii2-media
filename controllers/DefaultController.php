@@ -23,10 +23,11 @@ use pheme\settings\SettingsAction;
 use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\Controller;
 use yii\web\Response;
 use yii\web\UploadedFile;
 
-class DefaultController extends \yii\web\Controller
+class DefaultController extends Controller
 {
 	/**
 	 * @inheritdoc
@@ -35,7 +36,7 @@ class DefaultController extends \yii\web\Controller
 	{
 		return [
 			'access' => [
-				'class' => AccessControl::className(),
+				'class' => AccessControl::class,
 				'rules' => [
 					[
 						'allow' => true,
@@ -48,7 +49,7 @@ class DefaultController extends \yii\web\Controller
 				}
 			],
 			'verbs' => [
-				'class' => VerbFilter::className(),
+				'class' => VerbFilter::class,
 				'actions' => [
 					'delete' => ['post'],
 					'deletemultiple' => ['post'],
@@ -86,7 +87,7 @@ class DefaultController extends \yii\web\Controller
 		$model = $this->findModel($id);
 
 		return $this->renderAjax('view', [
-			'model' => $model,
+			'model' => $model
 		]);
 	}
 
