@@ -21,7 +21,6 @@ use yii\db\ActiveQuery;
  */
 class MediaQuery extends ActiveQuery
 {
-
     /**
      * @inheritdoc
      *
@@ -55,5 +54,4 @@ class MediaQuery extends ActiveQuery
     {
         return parent::one($db);
     }
-
 }

@@ -36,23 +36,26 @@ use yii\web\UploadedFile;
  * This is the model class for table "{{%media}}".
  *
  * @property int $id
- * @property string $originalname
+ * @property string originalname
  * @property string $reference
  * @property string $duration
  * @property int $size
- * @property int $hits
+ * @property int hits
  *
  * @property Media $items
  *
  * @property string $formattedSize
  * @property string $uploadMaxSize
  * @property string $mimeTypeIcon
- * @property array $mediaAllowed
+ * @property array  $mediaAllowed
  * @property string $mediaPath
  * @property string $mediaThumbsPath
  * @property string[] $mediaType
  * @property string $mediasWidget
  * @property array $mediaAccepted
+ * @property string $tinifyCode
+ * @property Tinify $tinify
+ * @property string $fileUrl
  * @property string $createButton
  */
 class Media extends ActiveRecord
@@ -127,9 +130,14 @@ class Media extends ActiveRecord
 		return true;
 	}
 
+	/**
+	 * Delete file Media thmbs
+	 *
+	 * @return bool
+	 */
 	public function deleteThumbs()
 	{
-		$thumbS  = $this->getMediaThumbsPath('small');
+		$thumbS  = $this->getMediaThumbsPath();
 		$thumbM  = $this->getMediaThumbsPath('medium');
 		$thumbL  = $this->getMediaThumbsPath('large');
 		$thumbXL = $this->getMediaThumbsPath('extra');
@@ -281,7 +289,7 @@ class Media extends ActiveRecord
 		// generate media alias
 		$mediaAlias = $this->generateAlias($originalName);
 		// generate a unique media name
-		$mediaName = Yii::$app->security->generateRandomString(32);
+		$mediaName = Yii::$app->security->generateRandomString();
 		// get media path from controller
 		$mediaPath = Yii::getAlias(Yii::$app->getModule('media')->mediaPath);
 		// get media extension
@@ -709,5 +717,4 @@ class Media extends ActiveRecord
     {
         return new MediaQuery(static::class);
     }
-
 }

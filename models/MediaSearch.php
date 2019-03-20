@@ -18,7 +18,6 @@ use yii\data\ActiveDataProvider;
  */
 class MediaSearch extends Media
 {
-
     /**
      * {@inheritdoc}
      */
@@ -83,5 +82,4 @@ class MediaSearch extends Media
 
         return $dataProvider;
     }
-
 }
