@@ -39,12 +39,15 @@ Set on your configuration file:
 	// Yii2 Media
 	'media' => [
 		'class' => 'cinghie\media\Media',
+		'mediaNameType' = 'casual'; // casual or original
 		'mediaPath' => '@frontend/web/media/',  
 		'mediaThumbsPath' => '@frontend/web/media/thumbs/',  
 		'mediaURL' => $params['media']['mediaURL'],  
 		'mediaThumbsURL' => $params['media']['mediaThumbsURL'],  
+		'mediaRoles' => ['admin'],
+		'mediaType' = ['jpg','jpeg','gif','png','csv','xls','xlx','pdf','txt','doc','docs','mp3','mp4'];  
 		'tinyPngAPIKey' => 'YOUR_TINIFY_API_KEY',
-		'mediaRoles' => ['admin'],  
+		'showTinify' => false,
 		'showTitles' => false
 	],
 	

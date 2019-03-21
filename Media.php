@@ -82,7 +82,7 @@ class Media extends Module
 	/**
 	 * Translating module message
 	 */
-	public function registerTranslations()
+	protected function registerTranslations()
 	{
 		if (!isset(Yii::$app->i18n->translations['media*']))
 		{
