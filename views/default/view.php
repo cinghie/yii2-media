@@ -12,6 +12,13 @@ $this->registerCss('
     .modal-dialog.xl {
         width: 90%;
     }
+    .modal-image, .modal-info {
+        margin: 25px auto;
+    }
+    .modal-info {
+        font-size: 14px;
+        line-height: 20px;
+    }
 ');
 
 ?>
