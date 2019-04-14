@@ -151,5 +151,4 @@ class Media extends Module
 			copy($sourceImage, $defaultImage);
 		}
 	}
-
 }
