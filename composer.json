@@ -27,5 +27,8 @@
         "psr-4": {
             "cinghie\\media\\": ""
         }
+    },
+    "extra": {
+        "bootstrap": "cinghie\\media\\Bootstrap"
     }
 }

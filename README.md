@@ -86,3 +86,52 @@ apt-get install ffmpeg
 
 whereis ffmpeg
 ```
+
+## Overrides
+
+Override controller example, on modules config
+
+```
+'modules' => [ 
+
+	'media' => [
+		'class' => 'cinghie\media\Media',
+		'controllerMap' => [
+			'default' => 'app\controllers\DefaultController',
+		]
+	]
+	
+],
+```
+
+Override models example, on modules config
+
+```
+'modules' => [ 
+
+	'media' => [
+		'class' => 'cinghie\media\media',
+		'modelMap' => [
+			'Media' => 'app\models\media\Media',
+			'MediaSettings' => 'app\models\media\MediaSettings',
+		]
+	]
+	
+],
+```
+
+Override view example, on components config
+
+```
+'components' => [ 
+
+	'view' => [
+		'theme' => [
+			'pathMap' => [
+				'@cinghie/media/views/default' => '@app/views/media/default',
+			],
+		],
+	],
+	
+],
+```
