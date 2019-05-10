@@ -693,7 +693,7 @@ class Media extends ActiveRecord
 			'responsiveWrap' => true,
 			'hover' => true,
 			'panel' => [
-				'heading' => '<h3 class="panel-title"><i class="fa fa-cloud-upload"></i></h3>',
+				'heading' => '<h3 class="panel-title"><i class="fa fa-file-image"></i></h3>',
 				'type' => 'success',
 			]
 		]);
