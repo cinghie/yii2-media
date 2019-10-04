@@ -24,6 +24,7 @@ use kartik\grid\CheckboxColumn;
 use kartik\grid\GridView;
 use kartik\widgets\FileInput;
 use yii\base\InvalidParamException;
+use yii\base\Model;
 use yii\db\ActiveRecord;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
@@ -47,7 +48,7 @@ use yii\web\UploadedFile;
  * @property string $formattedSize
  * @property string $uploadMaxSize
  * @property string $mimeTypeIcon
- * @property array  $mediaAllowed
+ * @property array $mediaAllowed
  * @property string $mediaPath
  * @property string $mediaThumbsPath
  * @property string[] $mediaType
@@ -359,7 +360,7 @@ class Media extends ActiveRecord
 
 		// Save Video Thumbs
 		if(strpos($media->mimetype, 'video') !== false) {
-			$frame = $this->getVideoThumb($mediaLink,$sec = 3);
+			$frame = $this->createVideoThumb($mediaLink,$sec = 3);
 			$frame->save($thumbsPath . 'video/' .$media->filename.'.jpg');
 		}
 
@@ -417,10 +418,11 @@ class Media extends ActiveRecord
 			$unit = (int)log($bytes, 1024);
 			$units = array('B', 'KB', 'MB', 'GB');
 
-			if (array_key_exists($unit, $units) === true)
-			{
+			if (array_key_exists($unit, $units) === true && $unit > 0) {
 				return sprintf('%d %s', $bytes / (1024 * $unit), $units[$unit]);
 			}
+
+			return '1 KB';
 		}
 
 		return $bytes;
@@ -494,7 +496,7 @@ class Media extends ActiveRecord
 	 */
 	public function getMediaWidget($mediaName = 'item')
 	{
-		/** @var $this \yii\base\Model */
+		/** @var $this Model */
 		$media = '<label class="control-label" for="items-photo_name">' .Yii::t('media','Media'). '</label>';
 		$media .= FileInput::widget([
 			'model' => $this,
@@ -668,7 +670,7 @@ class Media extends ActiveRecord
 					'hAlign' => 'center',
 					'value' => function ($model) {
 						/** @var $model self */
-						return $model->duration ?? '<span class="fa fa-ban text-danger"></span>';
+						return $model->duration ?: '<span class="fa fa-ban text-danger"></span>';
 					}
 				],
 				[

@@ -12,6 +12,7 @@
 
 namespace cinghie\media;
 
+use RuntimeException;
 use Yii;
 use yii\base\Module;
 use yii\i18n\PhpMessageSource;
@@ -114,7 +115,7 @@ class Media extends Module
 	{
 		if(!file_exists(Yii::getAlias($this->mediaPath)) && !mkdir($concurrentDirectory = $this->mediaPath, 0755, true) && !is_dir($concurrentDirectory))
 		{
-			throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+			throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
 		}
 	}
 
@@ -137,7 +138,7 @@ class Media extends Module
 		{
 			if(!file_exists($thumbsPath . $size) && !mkdir($concurrentDirectory = $thumbsPath . $size, 0755, true) && !is_dir($concurrentDirectory))
 			{
-				throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+				throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
 			}
 		}
 	}

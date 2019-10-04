@@ -18,12 +18,26 @@ use cinghie\traits\ViewsHelpersTrait;
 use yii\base\InvalidConfigException;
 use yii\web\HttpException;
 
+/**
+ * Class MediaSettings
+ */
 class MediaSettings extends Media
 {
 	use CacheTrait, ViewsHelpersTrait;
 
+	/**
+	 * @var integer $tinifyActive
+	 */
 	public $tinifyActive;
+
+	/**
+	 * @var integer $tinifyAutomatic
+	 */
 	public $tinifyAutomatic;
+
+	/**
+	 * @var string $tinifyCode
+	 */
 	public $tinifyCode;
 
 	/**
