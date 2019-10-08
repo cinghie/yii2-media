@@ -316,10 +316,27 @@ class Media extends ActiveRecord
 			$media->size  = $file->size;
 			$media->save();
 		}
-		
-		if(Yii::$app->getModule('media')->tinyPngAPIKey && strpos($media->mimetype, 'image') !== false) {
-			$tinify = new Tinify(['apiKey' => Yii::$app->getModule('media')->tinyPngAPIKey]);
-			$tinify->compress($fileFullPath);
+
+        $settings = Yii::$app->settings;
+		$tinyPngAPIKey = $settings->get('tinifyCode', 'MediaSettings');
+		$tinyPngAutomatic = (int)$settings->get('tinifyAutomatic', 'MediaSettings');
+
+		if($tinyPngAPIKey && $tinyPngAutomatic && strpos($media->mimetype, 'image') !== false)
+		{
+		    // Compress Image
+			$tinify = new Tinify(['apiKey' => $tinyPngAPIKey]);
+
+            try {
+                $tinify->compress($fileFullPath);
+            } catch(Error $e) {
+                print($e->getMessage());
+            }
+
+            // Update Media DB
+            $newMediaSize = filesize($fileFullPath);
+            $media->tinified = (int)$media->size - (int)$newMediaSize;
+            $media->size = $newMediaSize;
+            $media->save();
 		}
 
 		if($media->id !== null && (strpos($media->mimetype, 'image') !== false || strpos($media->mimetype, 'video') !== false)) {
