@@ -422,30 +422,6 @@ class Media extends ActiveRecord
 	}
 
 	/**
-	 * Format size in readable size
-	 *
-	 * @return string
-	 */
-	public function getFormattedSize()
-	{
-		$bytes = sprintf('%u', $this->size);
-
-		if ($bytes > 0)
-		{
-			$unit = (int)log($bytes, 1024);
-			$units = array('B', 'KB', 'MB', 'GB');
-
-			if (array_key_exists($unit, $units) === true && $unit > 0) {
-				return sprintf('%d %s', $bytes / (1024 * $unit), $units[$unit]);
-			}
-
-			return '1 KB';
-		}
-
-		return $bytes;
-	}
-
-	/**
 	 * Generate Attachment type from mimetype
 	 *
 	 * @return string[]
@@ -596,7 +572,7 @@ class Media extends ActiveRecord
 				    </a>
 				    <div style="color: #999; font-size: 12px;">'.$media->mimetype.'</div>
 				    <div style="color: #999; font-size: 12px;">'.$media->reference.'</div>
-				    <div style="color: #999; font-size: 12px;">'.$media->getFormattedSize().'</div>
+				    <div style="color: #999; font-size: 12px;">'.$media->formatSize().'</div>
 				  </div>';
 		$html .= '</div>';
 		$html .= '</div>';
