@@ -231,7 +231,7 @@ class Media extends ActiveRecord
 			return Yii::getAlias(Yii::$app->getModule('media')->mediaURL).'image-not-found.jpg';
 		}
 
-		return $mediaThumbUrl;
+		return $this->getAttachmentPreview('img-responsive','height:100%; left:0; position: absolute; top:0; width:100%;');
 	}
 
 	/**
@@ -429,6 +429,22 @@ class Media extends ActiveRecord
 	public function getMediaType()
 	{
 		return $this->getAttachmentType();
+	}
+
+	/**
+	 * Get Video Player
+	 *
+	 * @param $video
+	 *
+	 * @return string
+	 */
+	public function getVideoPlayer($video = '')
+	{
+		$videoUrl = $video ? $video : $this->fileUrl;
+
+		return '<video class="text-center" width="100%" height="380" controls>
+                    <source src="'.$videoUrl.'" type="video/mp4">
+                </video>';;
 	}
 
 	/**

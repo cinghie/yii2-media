@@ -27,18 +27,31 @@ $this->registerCss('
 
 	<div class="col-sm-7 modal-image">
 
-		<?= Html::img($model->getMediaThumbsUrl(),['class' => 'img-responsive text-center', 'style' => 'margin: 0 auto;']) ?>
+		<?php
+
+		if (strpos($model->mimetype, 'video') !== false) {
+
+		    echo $model->getVideoPlayer();
+
+		} else {
+
+			echo Html::img($model->getMediaThumbsUrl(),[
+				'class' => 'img-responsive text-center',
+				'style' => 'margin: 0 auto;'
+			]);
+
+        } ?>
 
 	</div>
 
-	<div class="col-sm-5 modal-info" style="font-size: 12px">
+	<div class="col-sm-5 modal-info" style="font-size: 14px; margin-top: 45px;">
 
-        <strong><?= Yii::t('traits','Title') ?></strong>: <?= $model->title ?><br>
-        <strong><?= Yii::t('traits','Filename') ?></strong>: <?= $model->filename ?><br>
-        <strong><?= Yii::t('traits','MimeType') ?></strong>: <?= $model->mimetype ?><br>
-        <strong><?= Yii::t('traits','Created') ?></strong>: <?= $model->created ?><br>
-        <strong><?= Yii::t('traits','Created By') ?></strong>: <?= $model->createdBy->username ?><br>
-        <strong><?= Yii::t('traits','Size') ?></strong>: <?= $model->getFormattedSize() ?><br>
+        <span class="modal-title"><strong><?= Yii::t('traits','Title') ?></strong>: <?= $model->title ?></span><br>
+        <span class="modal-filename"><strong><?= Yii::t('traits','Filename') ?></strong>: <?= $model->filename ?></span><br>
+        <span class="modal-mymetype"><strong><?= Yii::t('traits','MimeType') ?></strong>: <?= $model->mimetype ?></span><br>
+        <span class="modal-created"><strong><?= Yii::t('traits','Created') ?></strong>: <?= $model->created ?></span><br>
+        <span class="modal-createdby"><strong><?= Yii::t('traits','Created By') ?></strong>: <?= $model->createdBy->username ?></span><br>
+        <span class="modal-size"><strong><?= Yii::t('traits','Size') ?></strong>: <?= $model->formatSize() ?></span><br>
 
 	</div>
 
