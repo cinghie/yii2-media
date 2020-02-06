@@ -40,12 +40,12 @@ $this->registerCss('
 
 	<div class="col-sm-7 modal-image">
 		<?php
-
-		if (strpos($model->mimetype, 'video') !== false) {
-		    echo $model->getVideoPlayer();
-		} else {
-			echo $model->getMediaThumbsUrl();
-        } ?>
+            if (strpos($model->mimetype, 'video') !== false) {
+                echo $model->getVideoPlayer();
+            } else {
+                echo $model->getMediaThumbsUrl();
+            }
+		?>
 	</div>
 
 	<div class="col-sm-5 modal-info" style="font-size: 14px; margin-top: 45px;">
