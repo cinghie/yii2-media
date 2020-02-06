@@ -12,6 +12,13 @@ $this->registerCss('
     .modal-dialog.xl {
         width: 90%;
     }
+    .modal-image {
+        max-width: 100%;
+        min-height: 350px;
+    }
+    .modal-image img {
+        padding: 10px 50px;
+    }
     .modal-image, .modal-info {
         margin: 25px auto;
     }
@@ -30,16 +37,9 @@ $this->registerCss('
 		<?php
 
 		if (strpos($model->mimetype, 'video') !== false) {
-
 		    echo $model->getVideoPlayer();
-
 		} else {
-
-			echo Html::img($model->getMediaThumbsUrl(),[
-				'class' => 'img-responsive text-center',
-				'style' => 'margin: 0 auto;'
-			]);
-
+			echo $model->getMediaThumbsUrl();
         } ?>
 
 	</div>

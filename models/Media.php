@@ -12,8 +12,9 @@
 
 namespace cinghie\media\models;
 
-use Exception;
 use getid3_exception;
+use Error;
+use Exception;
 use Yii;
 use cinghie\tinify\Tinify;
 use cinghie\traits\AttachmentTrait;
@@ -444,7 +445,7 @@ class Media extends ActiveRecord
 
 		return '<video class="text-center" width="100%" height="380" controls>
                     <source src="'.$videoUrl.'" type="video/mp4">
-                </video>';;
+                </video>';
 	}
 
 	/**
@@ -627,8 +628,8 @@ class Media extends ActiveRecord
 					'value' => function ($model) {
 						/** @var $model self */
 						if(strpos($model->mimetype, 'image') !== false || strpos($model->mimetype, 'video') !== false) {
-							$html  = '<div style="display: block; position:relative;">';
-							$html .= Html::img($model->getMediaThumbsUrl(),['class' => 'img-responsive text-center', 'style' => 'margin: 0 auto;', 'width' => '78px']);
+							$html  = '<div style="display: block; height: 48px; margin: 0 auto; position:relative; text-align: center; width: 48px;">';
+							$html .= $model->getMediaThumbsUrl();
 						} else {
 							$html  = '<div class="text-center" style="color: #3c8dbc;font-size: 52px;">';
 							$html .= $model->getAttachmentPreview('img-responsive','color: #3c8dbc;font-size: 72px;margin: 0 auto;');
@@ -669,7 +670,7 @@ class Media extends ActiveRecord
 					'hAlign' => 'center',
 					'value' => function ($model) {
 						/** @var $model self */
-						return $model->getFormattedSize();
+						return $model->formatSize();
 					}
 				],
 				[

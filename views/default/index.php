@@ -7,8 +7,11 @@
  * @var $this yii\web\View
  */
 
+use cinghie\masonry\MasonryMinifyAsset;
 use kartik\widgets\ActiveForm;
 use yii\bootstrap\Modal;
+
+MasonryMinifyAsset::register($this);
 
 $this->title = Yii::t('media', 'Media');
 $this->params['breadcrumbs'][] = $this->title;
