@@ -28,6 +28,9 @@ $this->registerCss('
     .modal-image, .modal-info {
         margin: 25px auto;
     }
+    .modal-image .media-item {
+        margin-bottom: 15px;
+    }
     .modal-info {
         font-size: 14px;
         line-height: 20px;
@@ -38,7 +41,7 @@ $this->registerCss('
 
 <div class="row">
 
-	<div class="col-sm-7 modal-image">
+	<div class="col-sm-7 text-center modal-image">
 		<?php
             if (strpos($model->mimetype, 'video') !== false) {
                 echo $model->getVideoPlayer();
@@ -49,12 +52,24 @@ $this->registerCss('
 	</div>
 
 	<div class="col-sm-5 modal-info" style="font-size: 14px; margin-top: 45px;">
-        <span class="modal-title"><strong><?= Yii::t('traits','Title') ?></strong>: <?= $model->title ?></span><br>
-        <span class="modal-filename"><strong><?= Yii::t('traits','Filename') ?></strong>: <?= $model->filename ?></span><br>
-        <span class="modal-mymetype"><strong><?= Yii::t('traits','MimeType') ?></strong>: <?= $model->mimetype ?></span><br>
-        <span class="modal-created"><strong><?= Yii::t('traits','Created') ?></strong>: <?= $model->created ?></span><br>
-        <span class="modal-createdby"><strong><?= Yii::t('traits','Created By') ?></strong>: <?= $model->createdBy->username ?></span><br>
-        <span class="modal-size"><strong><?= Yii::t('traits','Size') ?></strong>: <?= $model->formatSize() ?></span><br>
+        <span class="modal-title">
+            <strong><?= Yii::t('traits','Title') ?></strong>: <?= $model->title ?>
+        </span><br>
+        <span class="modal-filename">
+            <strong><?= Yii::t('traits','Filename') ?></strong>: <?= $model->filename ?>
+        </span><br>
+        <span class="modal-mymetype">
+            <strong><?= Yii::t('traits','MimeType') ?></strong>: <?= $model->mimetype ?>
+        </span><br>
+        <span class="modal-created">
+            <strong><?= Yii::t('traits','Created') ?></strong>: <?= $model->created ?>
+        </span><br>
+        <span class="modal-createdby">
+            <strong><?= Yii::t('traits','Created By') ?></strong>: <a href="<?= $model->getUserAdminUrl($model->createdBy->id) ?>" title="<?= $model->createdBy->username ?>"><?= $model->createdBy->username ?></a>
+        </span><br>
+        <span class="modal-size">
+            <strong><?= Yii::t('traits','Size') ?></strong>: <?= $model->formatSize() ?>
+        </span><br>
 	</div>
 
 </div>

@@ -20,6 +20,7 @@ use cinghie\tinify\Tinify;
 use cinghie\traits\AttachmentTrait;
 use cinghie\traits\CreatedTrait;
 use cinghie\traits\TitleAliasTrait;
+use cinghie\traits\UserHelpersTrait;
 use cinghie\traits\ViewsHelpersTrait;
 use kartik\grid\CheckboxColumn;
 use kartik\grid\GridView;
@@ -62,7 +63,7 @@ use yii\web\UploadedFile;
  */
 class Media extends ActiveRecord
 {
-	use AttachmentTrait, CreatedTrait, TitleAliasTrait, ViewsHelpersTrait;
+	use AttachmentTrait, CreatedTrait, TitleAliasTrait, UserHelpersTrait, ViewsHelpersTrait;
 
 	public $items;
 
@@ -575,7 +576,7 @@ class Media extends ActiveRecord
 			$style = 'font-size: 100px; margin-bottom: 0; padding-bottom: calc(100% - 158px); padding-top: 20px; position: relative; overflow: hidden; text-align: center; width: 100%;';
 		}
 
-		$html  = '<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">';
+		$html  = '<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12" style="margin-bottom: 30px;">';
 		$html .= '<div class="media-item">';
 		$html .= '<a class="thumbnail modalButton" href="'.Url::to(['view','id' => $media->id]).'" style="'.$style.'">';
 		$html .= $media->getAttachmentPreview('img-responsive','height:100%; left:0; position: absolute; top:0; width:100%;');
