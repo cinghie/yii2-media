@@ -7,7 +7,6 @@
  * @var $this yii\web\View
  */
 
-
 use kartik\helpers\Html;
 use kartik\widgets\ActiveForm;
 

@@ -1,41 +1,8 @@
 <?php
 
-/** @var \cinghie\media\models\Media $model */
+/** @var Media $model */
 
-use yii\bootstrap\Html;
-
-$this->registerCss('
-    #modal {
-        padding-left: 0!important;
-        padding-right: 0!important;
-    }
-    .modal-dialog.xl {
-        width: 90%;
-    }
-    .modal-image {
-        max-width: 100%;
-        min-height: 350px;
-    }
-    .modal-image i {
-        font-size: 200px;
-        margin: 0 auto;
-        padding: 10px 50px;
-        text-align: center;
-    }
-    .modal-image img {
-        padding: 10px 50px;
-    }
-    .modal-image, .modal-info {
-        margin: 25px auto;
-    }
-    .modal-image .media-item {
-        margin-bottom: 15px;
-    }
-    .modal-info {
-        font-size: 14px;
-        line-height: 20px;
-    }
-');
+use cinghie\media\models\Media;
 
 ?>
 
