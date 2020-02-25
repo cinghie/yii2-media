@@ -15,6 +15,8 @@
             }
         ?>
 
+        <?= $searchModel->getDeleteButton() ?>
+
 	    <?= $searchModel->getUpdateButton() ?>
 
 	    <?= $searchModel->getCreateButton() ?>

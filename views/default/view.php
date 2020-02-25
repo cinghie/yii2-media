@@ -3,6 +3,7 @@
 /** @var Media $model */
 
 use cinghie\media\models\Media;
+use kartik\helpers\Html;
 
 ?>
 
@@ -36,7 +37,16 @@ use cinghie\media\models\Media;
         </span><br>
         <span class="modal-size">
             <strong><?= Yii::t('traits','Size') ?></strong>: <?= $model->formatSize() ?>
-        </span><br>
+        </span><br><br><br>
+        <span class="modal-delete">
+            <?= Html::a(Yii::t('traits','Delete'), ['delete', 'id' => $model->id], [
+                'class'=>'button-secondary button-large',
+                'data' => [
+	                'confirm' => Yii::t('traits', 'Do you want delete selected items?'),
+	                'method' => 'post',
+                ],
+            ]) ?>
+        </span>
 	</div>
 
 </div>

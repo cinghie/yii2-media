@@ -27,6 +27,9 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\web\UploadedFile;
 
+/**
+ * Class DefaultController
+ */
 class DefaultController extends Controller
 {
 	/**
