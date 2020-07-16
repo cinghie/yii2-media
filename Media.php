@@ -17,41 +17,84 @@ use Yii;
 use yii\base\Module;
 use yii\i18n\PhpMessageSource;
 
+/**
+ * Class Media
+ */
 class Media extends Module
 {
-	// Select Media Name: casual or original
+	/**
+     * Select Media Name casual || original
+     *
+     * @var string
+     */
 	public $mediaNameType = 'casual';
-	
-	// Select Path To Upload Media
+
+    /**
+     * Select Path to upload Media
+     *
+     * @var string
+     */
 	public $mediaPath = '@webroot/media/';
 
-	// Select Path To Upload Media Thumbs
+    /**
+     * Select Path to upload Media Thumbs
+     *
+     * @var string
+     */
 	public $mediaThumbsPath = '@webroot/media/thumbs/';
 
-	// Select URL To Media Files
+    /**
+     * Select URL To Media Files
+     *
+     * @var string
+     */
 	public $mediaURL  = '@web/media/';
 
-	// Select URL To Media Thumbs Files
+    /**
+     * Select URL to Media Thumbs Files
+     *
+     * @var string
+     */
 	public $mediaThumbsURL  = '@web/media/thumbs/';
 
-	// Select Media Thumbs Options
-	public $mediaThumbsOptions =	[
+    /**
+     * Select Media Thumbs Options
+     *
+     * @var array
+     */
+	public $mediaThumbsOptions = [
 		'small'  => ['quality' => 90, 'width' => 250, 'height' => 250],
 		'medium' => ['quality' => 90, 'width' => 680, 'height' => 680],
 		'large'  => ['quality' => 90, 'width' => 1280, 'height' => 1280],
 		'extra'  => ['quality' => 90, 'width' => 1980, 'height' => 1980],
 	];
 
-	// Select Media Types allowed
+    /**
+     * Select Media Types allowed
+     *
+     * @var array
+     */
 	public $mediaType = ['jpg','jpeg','gif','png','csv','xls','xlx','pdf','txt','doc','docs','mp3','mp4','zip'];
 
-	// Media Rules
+    /**
+     * Media Rules
+     *
+     * @var array
+     */
 	public $mediaRoles = ['admin'];
 
-	// Model map
+    /**
+     * Model Map
+     *
+     * @var array
+     */
 	public $modelMap = [];
 
-	// Slugify Options
+    /**
+     * Slugify Options
+     *
+     * @var array
+     */
 	public $slugifyOptions = [
 		'separator' => '-',
 		'lowercase' => true,
@@ -61,13 +104,25 @@ class Media extends Module
 		]
 	];
 
-	// Tiny PNG APi Key
+    /**
+     * Tiny PNG APi Key
+     *
+     * @var string
+     */
 	public $tinyPngAPIKey = '';
 
-	// Show Tiny PNG Interface
+    /**
+     * Show Tiny PNG Interface
+     *
+     * @var bool
+     */
 	public $showTinify = true;
 
-	// Show Titles in the views
+    /**
+     * Show Titles in the views
+     *
+     * @var bool
+     */
 	public $showTitles = true;
 
 	/**
