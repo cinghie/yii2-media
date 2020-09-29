@@ -22,7 +22,7 @@ use yii\db\ActiveQuery;
 class MediaQuery extends ActiveQuery
 {
     /**
-     * @inheritdoc
+     * Get last Media
      *
      * @param int $limit
      * @param string $order

@@ -12,6 +12,9 @@
 
 use cinghie\traits\migrations\Migration;
 
+/**
+ * Class m151021_200526_create_media_table
+ */
 class m151021_200526_create_media_table extends Migration
 {
 	/**

@@ -4,15 +4,15 @@ use yii\bootstrap\Nav;
 
 $items = [
 	[
-		'label'   => Yii::t('media', 'Media'),
-		'url'     => ['/media/default/index'],
+		'label' => Yii::t('media', 'Media'),
+		'url' => ['/media/default/index'],
 	]
 ];
 
 if(Yii::$app->getModule('media')->showTinify) {
 	$items[] = [
-		'label'   => Yii::t('media', 'Tinify'),
-		'url'     => ['/media/default/tinify'],
+		'label' => Yii::t('media', 'Tinify'),
+		'url' => ['/media/default/tinify'],
 	];
 }
 

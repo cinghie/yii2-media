@@ -109,8 +109,7 @@ class Media extends ActiveRecord
 	 */
 	public function beforeDelete()
 	{
-		/** @var Media $this */
-		$this->deleteFile();
+        $this->deleteFile();
 		$this->deleteThumbs();
 
 		return parent::beforeDelete();
@@ -573,7 +572,7 @@ class Media extends ActiveRecord
 		if (strpos($media->mimetype, 'image') !== false || strpos($media->mimetype, 'video') !== false) {
 			$style = 'margin-bottom: 0; padding-bottom: 100% ; position: relative; overflow: hidden; width: 100%;';
 		} else {
-			$style = 'font-size: 100px; margin-bottom: 0; padding-bottom: calc(100% - 158px); padding-top: 20px; position: relative; overflow: hidden; text-align: center; width: 100%;';
+			$style = 'font-size: 100px; margin-bottom: 0; padding-bottom: calc(100% - 160px); padding-top: 20px; position: relative; overflow: hidden; text-align: center; width: 100%;';
 		}
 
 		$html  = '<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12" style="margin-bottom: 30px;">';
@@ -662,7 +661,7 @@ class Media extends ActiveRecord
 					],
 					'filterInputOptions' => ['placeholder' => ''],
 					'format' => 'raw',
-					'width' => '10%',
+					'width' => '12%',
 					'hAlign' => 'center',
 				],
 				[

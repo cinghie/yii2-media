@@ -1,11 +1,20 @@
-<div class="row">
+<?php
 
-	<div class="col-md-6 pull-left text-left">
+/**
+ * @var $searchModel MediaSearch
+ */
 
+use cinghie\media\models\MediaSearch;
 
+?>
+
+<div class="row media-navbar">
+
+	<div class="col-md-6 media-navbar-menu">
+        <?= Yii::$app->view->renderFile('@vendor/cinghie/yii2-media/views/default/_menu.php') ?>
 	</div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 media-navbar-actions">
 
         <?php
             if(Yii::$app->controller->action->id === 'index') {
