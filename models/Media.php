@@ -569,19 +569,29 @@ class Media extends ActiveRecord
 	 */
 	private function getMediaGrid($media)
 	{
-		if (strpos($media->mimetype, 'image') !== false || strpos($media->mimetype, 'video') !== false) {
+		if (str_contains($media->mimetype, 'image') || str_contains($media->mimetype, 'video')) {
+			$isPhotoVideo = true;
 			$style = 'margin-bottom: 0; padding-bottom: 100% ; position: relative; overflow: hidden; width: 100%;';
 		} else {
+			$isPhotoVideo = false;
 			$style = 'font-size: 100px; margin-bottom: 0; padding-bottom: calc(100% - 160px); padding-top: 20px; position: relative; overflow: hidden; text-align: center; width: 100%;';
 		}
 
-		$html  = '<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12" style="margin-bottom: 30px;">';
-		$html .= '<div class="grid-item media-item">';
+		$html  = '<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12" style="margin-bottom: 10px">';
+
+		if($isPhotoVideo) {
+			$html .= '<div class="grid-item media-item media-photo">';
+		} else {
+			$html .= '<div class="grid-item media-item media-others">';
+		}
+
 		$html .= '<a class="thumbnail modalButton" href="'.Url::to(['view','id' => $media->id]).'" style="'.$style.'">';
 		$html .= $media->getAttachmentPreview('img-responsive','height:100%; left:0; position: absolute; top:0; width:100%;');
-		if (strpos($media->mimetype, 'video') !== false) {
+
+		if (str_contains($media->mimetype, 'video')) {
 			$html .= '<span style="color: #FFF; position:absolute; left: 48%; top: 45%;"><i class="fa fa-play" aria-hidden="true"></i></span>';
 		}
+
 		$html .= '</a>';
 		$html .= '<div style="background: #f4f4f4; display: block; overflow: hidden; padding: 10px; text-overflow: ellipsis; white-space: nowrap;">
 					<a id="modalButton" href="'.Url::to(['view','id' => $media->id]).'" class="mailbox-attachment-name">

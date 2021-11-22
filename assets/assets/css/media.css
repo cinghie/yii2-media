@@ -35,3 +35,11 @@
     font-size: 14px;
     line-height: 20px;
 }
+
+@media only screen and (max-width: 986px)
+{
+    .media-others a.thumbnail.modalButton {
+        padding-bottom: calc(100% - 152px)!important;
+        padding-top: 14px!important;
+    }
+}
