@@ -18,7 +18,9 @@
         }
     ],
     "require": {
-        "yiisoft/yii2": "^2.0.14",
+        "yiisoft/yii2": "^2.0.14"
+    },
+    "require": {
         "cinghie/yii2-masonry": "@dev",
         "cinghie/yii2-tinify": "@dev",
         "cinghie/yii2-traits": "@dev"
