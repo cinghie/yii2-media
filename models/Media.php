@@ -80,7 +80,7 @@ class Media extends ActiveRecord
      */
     public function rules()
     {
-        return array_merge(AttachmentTrait::rules(), [
+        return array_merge($this->getAttachmentRules(), [
             [['title', 'filename'], 'required'],
             [['hits'], 'integer'],
             [['duration','reference'], 'string', 'max' => 32],
@@ -93,7 +93,7 @@ class Media extends ActiveRecord
      */
     public function attributeLabels()
     {
-        return array_merge(AttachmentTrait::attributeLabels(),[
+        return array_merge($this->getAttachmentAttributeLabels(),[
             'id' => Yii::t('traits', 'ID'),
             'duration' => Yii::t('traits', 'Duration'),
             'originalname' => Yii::t('traits', 'Original Name'),
